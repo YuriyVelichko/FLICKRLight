@@ -11,6 +11,20 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class NearestViewController: UICollectionViewController {
+    
+    var searchResult : FlickrSearchHandler?
+    
+    convenience init(){
+        self.init()
+        
+        initSearchResult()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init( coder: aDecoder )
+        
+        initSearchResult()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +36,8 @@ class NearestViewController: UICollectionViewController {
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        
+        uploadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,5 +106,30 @@ class NearestViewController: UICollectionViewController {
     
     }
     */
+    
+    // MARK: Internal Methods
+    
+    func initSearchResult() {
+        let options = createRequestParams()
+        searchResult = FlickrSearchHandler( options: options )
+    }
+    
+    func uploadData(){
+        searchResult?.updateData() { error in
+            if error != nil {
+                NSLog( error.localizedDescription )
+            }
+        }
+    }
+    
+    func createRequestParams() -> [String : String]! {
+        var res : [String : String] = [:]
+        
+        res[ "lat" ] = "46.6354";
+        res[ "lon" ] = "32.6169";
+        res[ "radius" ] = "5";
+        
+        return res;
+    }
 
 }
