@@ -15,6 +15,8 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
     
     var searchResult : FlickrSearchHandler?
     
+    var loading = false
+    
     convenience init(){
         self.init()
         
@@ -40,7 +42,7 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
 
         // Do any additional setup after loading the view.
         
-        uploadData()
+        uploadInfo()
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,18 +79,20 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return searchResult?.imagesURLS?.count ?? 0
+        return searchResult?.imagesInfo?.count ?? 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        if searchResult?.needUploadData(indexPath.row) ?? false {
+            uploadData()
+        }
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
     
         // Configure the cell
   
-        let imageData =  NSData(contentsOfURL: (searchResult?.imagesURLS?[indexPath.row])!)
-        cell.imageView.image = UIImage( data: imageData!);
-        
-        NSLog( "%ld", indexPath.row );
+        cell.imageView.image = UIImage( data: (searchResult?.dataAtIndex( indexPath.row ))! )
     
         return cell
     }
@@ -157,17 +161,37 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
         searchResult = FlickrSearchHandler( options: options )
     }
     
-    func uploadData(){
-        searchResult?.updateData() { error in
+    func uploadInfo(){
+        searchResult?.uploadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
                 if error != nil {
                     NSLog( error.localizedDescription )
-                }
+                }                
                 
                 self.collectionView?.reloadData()
             }
         }
+    }
+    
+    func uploadData(){
+        
+        if !loading {
+            
+            loading = true
+        
+            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) ) {
+                
+                self.searchResult?.uploadData()
+                
+                dispatch_async( dispatch_get_main_queue() ) {
+                    
+                    self.loading = false
+                    self.collectionView?.reloadData()
+                }
+            }
+        }
+
     }
     
     func createRequestParams() -> [String : String]! {

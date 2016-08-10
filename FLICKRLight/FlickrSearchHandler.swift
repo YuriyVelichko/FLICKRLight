@@ -16,7 +16,8 @@ class FlickrSearchHandler {
     private let flickrKey = "1ad60cb73a4eba6311c161ecad292a0b"
     private let flickrSecret = "20b65be7d58394e9"
     
-    var imagesURLS      : [NSURL]?
+    var lastLoadedData  = -1
+    var imagesInfo      : [[NSURL : NSData]]?
     var searchOptions   : [String : String]
     
     let chunkSize       = 100
@@ -41,7 +42,7 @@ class FlickrSearchHandler {
     }
     
     // MARK - methods
-    func updateData( completion: (NSError!) -> Void) {
+    func uploadInfo( completion: (NSError!) -> Void) {
         
         let fk = FlickrKit.sharedFlickrKit()
         
@@ -54,7 +55,6 @@ class FlickrSearchHandler {
                     
                     if error == nil
                     {
-                    
                         if (response != nil) {
                             // Pull out the photo urls from the results
                             let topPhotos = response["photos"] as! [NSObject: AnyObject]
@@ -63,17 +63,41 @@ class FlickrSearchHandler {
                                 let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
                                 NSLog( photoURL.absoluteString )
                                 
-                                if self.imagesURLS == nil{
-                                    self.imagesURLS = []
+                                if self.imagesInfo == nil{
+                                    self.imagesInfo = []
                                 }
                                 
-                                self.imagesURLS?.append( photoURL )
+                                self.imagesInfo?.append([ photoURL : NSData() ])
                             }
+                            
+                            self.uploadData();
                         }
                     }
                         
                     completion( error )
         }
+    }
+    
+    func uploadData() {
+        
+        let maxIndex = (imagesInfo?.count)! - lastLoadedData > 30 ? lastLoadedData + 30 : (imagesInfo?.count)! - 1
+        for index in (lastLoadedData + 1) ... maxIndex {
+            let pair = imagesInfo?[ index ]
+            let URL = pair?.keys.first
+            imagesInfo?[ index ].removeAll()
+            imagesInfo?[ index ][ URL! ] = NSData(contentsOfURL: (pair?.keys.first)! )!
+        }
+        
+        lastLoadedData = maxIndex
+    }
+    
+    func needUploadData( currentIndex : Int ) -> Bool {
+        return lastLoadedData - currentIndex < 50
+    }
+    
+    func dataAtIndex( index : Int ) -> NSData? {
+        let pair = imagesInfo?[ index ]
+        return pair?.values.first
     }
     
 }
