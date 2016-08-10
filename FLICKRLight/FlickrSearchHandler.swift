@@ -52,27 +52,27 @@ class FlickrSearchHandler {
                     , maxCacheAge: FKDUMaxAgeOneHour ) {
                     (response, error) -> Void in
                     
-                    if( error != nil )
+                    if error == nil
                     {
-                        completion( error )
-                        return;
-                    }
                     
-                    if (response != nil) {
-                        // Pull out the photo urls from the results
-                        let topPhotos = response["photos"] as! [NSObject: AnyObject]
-                        let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
-                        for photoDictionary in photoArray {
-                            let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
-                            NSLog( photoURL.absoluteString )
-                            
-                            if self.imagesURLS == nil{
-                                self.imagesURLS = []
+                        if (response != nil) {
+                            // Pull out the photo urls from the results
+                            let topPhotos = response["photos"] as! [NSObject: AnyObject]
+                            let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
+                            for photoDictionary in photoArray {
+                                let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
+                                NSLog( photoURL.absoluteString )
+                                
+                                if self.imagesURLS == nil{
+                                    self.imagesURLS = []
+                                }
+                                
+                                self.imagesURLS?.append( photoURL )
                             }
-                            
-                            self.imagesURLS?.append( photoURL )
                         }
                     }
+                        
+                    completion( error )
         }
     }
     

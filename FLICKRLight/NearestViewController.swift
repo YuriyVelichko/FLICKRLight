@@ -8,9 +8,10 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "photoCell"
+private let cellSpacing : CGFloat = CGFloat( 5 )
 
-class NearestViewController: UICollectionViewController {
+class NearestViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var searchResult : FlickrSearchHandler?
     
@@ -33,7 +34,9 @@ class NearestViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        collectionView!.registerClass(CollectionViewCell.self,
+                                      forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
         
@@ -59,19 +62,24 @@ class NearestViewController: UICollectionViewController {
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+
+        return searchResult?.imagesURLS?.count ?? 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
     
         // Configure the cell
+  
+        let imageData =  NSData(contentsOfURL: (searchResult?.imagesURLS?[indexPath.row])!)
+        cell.imageView.image = UIImage( data: imageData!);
+        
+        NSLog( "%ld", indexPath.row );
     
         return cell
     }
@@ -107,6 +115,32 @@ class NearestViewController: UICollectionViewController {
     }
     */
     
+    // MARK: UICollectionViewDelegateFlowLayout API
+    
+    func collectionView( collectionView: UICollectionView,
+                                   layout collectionViewLayout: UICollectionViewLayout,
+                                          minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView( collectionView: UICollectionView,
+                                   layout collectionViewLayout: UICollectionViewLayout,
+                                          minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        // Show 3 cells in the portrait orientation
+        
+        let screenSize  = UIScreen.mainScreen().bounds
+        let cellSize    = ( screenSize.width - CGFloat( cellSpacing * 2 ) ) / 3
+        
+        return CGSize( width: cellSize, height: cellSize )
+    }
+    
     // MARK: Internal Methods
     
     func initSearchResult() {
@@ -116,8 +150,13 @@ class NearestViewController: UICollectionViewController {
     
     func uploadData(){
         searchResult?.updateData() { error in
-            if error != nil {
-                NSLog( error.localizedDescription )
+            
+            dispatch_async( dispatch_get_main_queue() ) {
+                if error != nil {
+                    NSLog( error.localizedDescription )
+                }
+                
+                self.collectionView?.reloadData()
             }
         }
     }

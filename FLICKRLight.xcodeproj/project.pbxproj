@@ -12,6 +12,7 @@
 		DE2DD1331D5B0B9600875DD5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1321D5B0B9600875DD5 /* SearchViewController.swift */; };
 		DE2DD1351D5B0C1C00875DD5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */; };
 		DE2DD1371D5B274D00875DD5 /* FlickrSearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1361D5B274D00875DD5 /* FlickrSearchHandler.swift */; };
+		DE2DD1391D5B447200875DD5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */; };
 		DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */; };
 		DE3EF1111D5AFE300002DD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF10F1D5AFE300002DD76 /* Main.storyboard */; };
 		DE3EF1131D5AFE300002DD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1121D5AFE300002DD76 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 		DE2DD1321D5B0B9600875DD5 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE2DD1361D5B274D00875DD5 /* FlickrSearchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrSearchHandler.swift; sourceTree = "<group>"; };
+		DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		DE3EF1061D5AFE300002DD76 /* FLICKRLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLICKRLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE3EF1101D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				DE2DD1321D5B0B9600875DD5 /* SearchViewController.swift */,
 				DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */,
 				DE2DD1361D5B274D00875DD5 /* FlickrSearchHandler.swift */,
+				DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */,
 			);
 			path = FLICKRLight;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			files = (
 				DE2DD1331D5B0B9600875DD5 /* SearchViewController.swift in Sources */,
 				DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */,
+				DE2DD1391D5B447200875DD5 /* CollectionViewCell.swift in Sources */,
 				DE2DD1371D5B274D00875DD5 /* FlickrSearchHandler.swift in Sources */,
 				DE2DD1311D5B0B6100875DD5 /* NearestViewController.swift in Sources */,
 				DE2DD1351D5B0C1C00875DD5 /* DetailViewController.swift in Sources */,
