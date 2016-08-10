@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85552F8DCC706D2183AA742E /* Pods_FLICKRLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */; };
 		DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */; };
 		DE3EF10C1D5AFE300002DD76 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF10B1D5AFE300002DD76 /* FirstViewController.swift */; };
 		DE3EF10E1D5AFE300002DD76 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF10D1D5AFE300002DD76 /* SecondViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3CAF14994A841C68D55429D3 /* Pods-FLICKRLight.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLICKRLight.release.xcconfig"; path = "Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight.release.xcconfig"; sourceTree = "<group>"; };
 		DE3EF1061D5AFE300002DD76 /* FLICKRLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLICKRLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE3EF10B1D5AFE300002DD76 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		DE3EF1121D5AFE300002DD76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE3EF1151D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE3EF1171D5AFE300002DD76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FLICKRLight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLICKRLight.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85552F8DCC706D2183AA742E /* Pods_FLICKRLight.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4ED3AB88DEFAB8391D50C56A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */,
+				3CAF14994A841C68D55429D3 /* Pods-FLICKRLight.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7B68A0ADFC66CA3E7B27E3F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DE3EF0FD1D5AFE300002DD76 = {
 			isa = PBXGroup;
 			children = (
 				DE3EF1081D5AFE300002DD76 /* FLICKRLight */,
 				DE3EF1071D5AFE300002DD76 /* Products */,
+				4ED3AB88DEFAB8391D50C56A /* Pods */,
+				7B68A0ADFC66CA3E7B27E3F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE3EF11A1D5AFE300002DD76 /* Build configuration list for PBXNativeTarget "FLICKRLight" */;
 			buildPhases = (
+				F5AD510C937D0D363E4D4D63 /* [CP] Check Pods Manifest.lock */,
 				DE3EF1021D5AFE300002DD76 /* Sources */,
 				DE3EF1031D5AFE300002DD76 /* Frameworks */,
 				DE3EF1041D5AFE300002DD76 /* Resources */,
+				2D7D2610768840C0F4C5E1B2 /* [CP] Embed Pods Frameworks */,
+				6C43AD1FF5C0E8EE24197D2C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -132,6 +159,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D7D2610768840C0F4C5E1B2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6C43AD1FF5C0E8EE24197D2C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5AD510C937D0D363E4D4D63 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DE3EF1021D5AFE300002DD76 /* Sources */ = {
@@ -253,6 +328,7 @@
 		};
 		DE3EF11B1D5AFE300002DD76 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FLICKRLight/Info.plist;
@@ -264,6 +340,7 @@
 		};
 		DE3EF11C1D5AFE300002DD76 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CAF14994A841C68D55429D3 /* Pods-FLICKRLight.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FLICKRLight/Info.plist;
@@ -292,6 +369,7 @@
 				DE3EF11C1D5AFE300002DD76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
