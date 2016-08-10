@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		85552F8DCC706D2183AA742E /* Pods_FLICKRLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */; };
 		DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */; };
-		DE3EF10C1D5AFE300002DD76 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF10B1D5AFE300002DD76 /* FirstViewController.swift */; };
-		DE3EF10E1D5AFE300002DD76 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF10D1D5AFE300002DD76 /* SecondViewController.swift */; };
 		DE3EF1111D5AFE300002DD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF10F1D5AFE300002DD76 /* Main.storyboard */; };
 		DE3EF1131D5AFE300002DD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1121D5AFE300002DD76 /* Assets.xcassets */; };
 		DE3EF1161D5AFE300002DD76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1141D5AFE300002DD76 /* LaunchScreen.storyboard */; };
@@ -20,8 +18,6 @@
 		3CAF14994A841C68D55429D3 /* Pods-FLICKRLight.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLICKRLight.release.xcconfig"; path = "Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight.release.xcconfig"; sourceTree = "<group>"; };
 		DE3EF1061D5AFE300002DD76 /* FLICKRLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLICKRLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DE3EF10B1D5AFE300002DD76 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		DE3EF10D1D5AFE300002DD76 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		DE3EF1101D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE3EF1121D5AFE300002DD76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE3EF1151D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -81,8 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */,
-				DE3EF10B1D5AFE300002DD76 /* FirstViewController.swift */,
-				DE3EF10D1D5AFE300002DD76 /* SecondViewController.swift */,
 				DE3EF10F1D5AFE300002DD76 /* Main.storyboard */,
 				DE3EF1121D5AFE300002DD76 /* Assets.xcassets */,
 				DE3EF1141D5AFE300002DD76 /* LaunchScreen.storyboard */,
@@ -213,9 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE3EF10E1D5AFE300002DD76 /* SecondViewController.swift in Sources */,
 				DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */,
-				DE3EF10C1D5AFE300002DD76 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
