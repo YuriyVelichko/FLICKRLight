@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FlickrKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-FLICKRLight.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>7D7B61409FC368CBA32386394F495B5D</key>
+		<key>2C55DDC22D2F33C1F74173B23D2C5D6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C79D5CDF7C27D3FF28F3EC87E0EA727B</key>
+		<key>3F4EB76E9D7129FBF582CC4AE3C6B3DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>71498807FD5C9BA6FA8BD25795D84DA1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

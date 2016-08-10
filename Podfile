@@ -8,5 +8,6 @@ target 'FLICKRLight' do
   # Pods for FLICKRLight
 
   pod 'SVProgressHUD'
+  pod 'FlickrKit'
 
 end
