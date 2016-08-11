@@ -13,18 +13,15 @@ class FlickrSearchHandler {
     
     // MARK: - properties
     
-    private let flickrKey = "1ad60cb73a4eba6311c161ecad292a0b"
-    private let flickrSecret = "20b65be7d58394e9"
+    private let flickrKey       = "1ad60cb73a4eba6311c161ecad292a0b"
+    private let flickrSecret    = "20b65be7d58394e9"
     
-    var lastLoadedData  = -1
-    var imagesInfo      : [[NSURL : NSData]]?
+    private var lastLoadedData  = -1
+    private let chunkSize       = 100
+    private var lastPage        = 0
+    
+    var imagesInfo      : [[NSURL : NSData]] = []
     var searchOptions   : [String : String]
-    
-    let chunkSize       = 100
-    private(set) var lastPage        = 0
-    private(set) var totalPages      = 0
-    
-    let searchRadiusKM  = 1
 
     // MARK - initializers
     
@@ -32,6 +29,8 @@ class FlickrSearchHandler {
         
         var finalOptions = options
         finalOptions[ "api_key" ] = flickrKey
+        finalOptions[ "page" ] = String( lastPage + 1 )
+        finalOptions[ "per_page"] = String( chunkSize )
         
         searchOptions = finalOptions
         
@@ -58,16 +57,17 @@ class FlickrSearchHandler {
                         if (response != nil) {
                             // Pull out the photo urls from the results
                             let topPhotos = response["photos"] as! [NSObject: AnyObject]
+                            
+                            if let page = topPhotos["page"] {
+                                self.lastPage = page as! Int
+                            }
+                            
                             let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
                             for photoDictionary in photoArray {
                                 let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
                                 NSLog( photoURL.absoluteString )
                                 
-                                if self.imagesInfo == nil{
-                                    self.imagesInfo = []
-                                }
-                                
-                                self.imagesInfo?.append([ photoURL : NSData() ])
+                                self.imagesInfo.append([ photoURL : NSData() ])
                             }
                             
                             self.uploadData();
@@ -80,15 +80,21 @@ class FlickrSearchHandler {
     
     func uploadData() {
         
-        let maxIndex = (imagesInfo?.count)! - lastLoadedData > 30 ? lastLoadedData + 30 : (imagesInfo?.count)! - 1
-        for index in (lastLoadedData + 1) ... maxIndex {
-            let pair = imagesInfo?[ index ]
-            let URL = pair?.keys.first
-            imagesInfo?[ index ].removeAll()
-            imagesInfo?[ index ][ URL! ] = NSData(contentsOfURL: (pair?.keys.first)! )!
+        let maxIndex = imagesInfo.count - lastLoadedData > 30 ? lastLoadedData + 30 : imagesInfo.count - 1
+        
+        if lastLoadedData < maxIndex {
+            for index in (lastLoadedData + 1) ... maxIndex {
+                let pair = imagesInfo[ index ]
+                let URL = pair.keys.first
+                imagesInfo[ index ].removeAll()
+                imagesInfo[ index ][ URL! ] = NSData(contentsOfURL: (pair.keys.first)! )!
+            }
+            
+            lastLoadedData = maxIndex
+        } else {
+            // Wait until new urls will be loaded
         }
         
-        lastLoadedData = maxIndex
     }
     
     func needUploadData( currentIndex : Int ) -> Bool {
@@ -96,8 +102,12 @@ class FlickrSearchHandler {
     }
     
     func dataAtIndex( index : Int ) -> NSData? {
-        let pair = imagesInfo?[ index ]
-        return pair?.values.first
+        if index < imagesInfo.count {
+            let pair = imagesInfo[ index ]
+            return pair.values.first
+        }
+        
+        return nil
     }
     
 }

@@ -79,7 +79,7 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return searchResult?.imagesInfo?.count ?? 0
+        return (searchResult?.imagesInfo.count)!
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
