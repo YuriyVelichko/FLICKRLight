@@ -17,6 +17,7 @@
 		DE3EF1111D5AFE300002DD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF10F1D5AFE300002DD76 /* Main.storyboard */; };
 		DE3EF1131D5AFE300002DD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1121D5AFE300002DD76 /* Assets.xcassets */; };
 		DE3EF1161D5AFE300002DD76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1141D5AFE300002DD76 /* LaunchScreen.storyboard */; };
+		DE3F8D3F1D5C75DA00A344CA /* FlickrSearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3F8D3E1D5C75DA00A344CA /* FlickrSearchCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		DE3EF1121D5AFE300002DD76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE3EF1151D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE3EF1171D5AFE300002DD76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE3F8D3E1D5C75DA00A344CA /* FlickrSearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrSearchCollectionViewController.swift; sourceTree = "<group>"; };
 		EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FLICKRLight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLICKRLight.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +98,7 @@
 				DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */,
 				DE2DD1361D5B274D00875DD5 /* FlickrSearchHandler.swift */,
 				DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */,
+				DE3F8D3E1D5C75DA00A344CA /* FlickrSearchCollectionViewController.swift */,
 			);
 			path = FLICKRLight;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE2DD1331D5B0B9600875DD5 /* SearchViewController.swift in Sources */,
+				DE3F8D3F1D5C75DA00A344CA /* FlickrSearchCollectionViewController.swift in Sources */,
 				DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */,
 				DE2DD1391D5B447200875DD5 /* CollectionViewCell.swift in Sources */,
 				DE2DD1371D5B274D00875DD5 /* FlickrSearchHandler.swift in Sources */,
