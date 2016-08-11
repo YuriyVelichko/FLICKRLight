@@ -25,11 +25,12 @@ class FlickrSearchHandler {
     private let flickrSecret    = "20b65be7d58394e9"
     
     private var lastLoadedData  = -1
-    private let chunkSize       = 100
+    private let chunkSize       = 200
     private var lastPage        = 0
     
     private var loadingCompleete = false
     private var updatingData    = false
+    private var updatingInfo   = false
     
     var imagesInfo      : [SearchResult] = []
     var searchOptions   : [String : String]
@@ -49,13 +50,13 @@ class FlickrSearchHandler {
     }
     
     // MARK - methods
-    func uploadInfo( completion: (NSError!) -> Void) {
+    func uploadInfo( completion: (NSError!) -> Void ) {
         
-        if loadingCompleete {
+        if loadingCompleete || updatingInfo {
             return
         }
         
-        objc_sync_enter( updatingData )
+        updatingInfo = true;
         
         let fk = FlickrKit.sharedFlickrKit()
         
@@ -73,6 +74,8 @@ class FlickrSearchHandler {
                     let topPhotos = response["photos"] as! [NSObject: AnyObject]
                     
                     if let page = topPhotos["page"] {
+                        
+                        NSLog( "TOTAL: %@ PAGES: %ld", topPhotos["total"] as! String, topPhotos["pages"] as? Int ?? 0)
                         
                         let pageValue = page as! Int;
                         
@@ -94,45 +97,54 @@ class FlickrSearchHandler {
                         self.imagesInfo.append( searchResult )
                     }
                     
-                    self.uploadData();
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        self.updatingInfo = false
+                    }
+                    
+                    self.uploadData(){
+                        completion( error )
+                    };
                 }
             }
-                
-            completion( error )
         }
-        
-        objc_sync_exit( updatingData )
     }
     
-    func uploadData() {
+    func uploadData( completion: (() -> Void)? ) {
         
         if updatingData {
             return
         }
         
-        objc_sync_enter( updatingData )
         updatingData = true
         
-        let maxIndex = imagesInfo.count - lastLoadedData > 30 ? lastLoadedData + 30 : imagesInfo.count - 1
+        dispatch_async( dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 ) ) {
         
-        if lastLoadedData < maxIndex {
-            for index in (lastLoadedData + 1) ... maxIndex {
-                
-                if let url = imagesInfo[ index ].urlCollection {
-                    imagesInfo[ index ].dataCollection = NSData(contentsOfURL: url )
+            let maxIndex = self.imagesInfo.count - self.lastLoadedData > 30 ? self.lastLoadedData + 30 : self.imagesInfo.count - 1
+            
+            if self.lastLoadedData < maxIndex {
+                for index in (self.lastLoadedData + 1) ... maxIndex {
+                    
+                    if let url = self.imagesInfo[ index ].urlCollection {
+                        self.imagesInfo[ index ].dataCollection = NSData(contentsOfURL: url )
+                    }
+                    
+                    NSLog( "%ld -> %ld", index, maxIndex )
                 }
                 
-                NSLog( "%ld -> %ld", index, maxIndex )
+                self.lastLoadedData = maxIndex
+            } else {
+                // Wait until new urls will be loaded
+                NSLog( "%ld", maxIndex )
             }
             
-            lastLoadedData = maxIndex
-        } else {
-            // Wait until new urls will be loaded
-            NSLog( "%ld", maxIndex )
+            dispatch_async( dispatch_get_main_queue() ) {
+                self.updatingData = false
+            }
+
+            if let callback = completion {
+                callback()
+            }
         }
-        
-        updatingData = false
-        objc_sync_exit( updatingData )
     }
     
     func needUploadData( currentIndex : Int ) -> Bool {
@@ -140,7 +152,8 @@ class FlickrSearchHandler {
     }
     
     func needUploadInfo( currentIndex : Int ) -> Bool {
-        return imagesInfo.count - currentIndex < 30
+        
+        return !loadingCompleete && imagesInfo.count - currentIndex < ( chunkSize / 2 )
     }
     
     func dataAtIndex( index : Int ) -> NSData? {

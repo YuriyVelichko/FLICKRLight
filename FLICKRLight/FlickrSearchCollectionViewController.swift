@@ -152,13 +152,12 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
     
     func uploadData( collectionView : UICollectionView ){
         
-        dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) ) {
-            
-            self.searchResult?.uploadData()
-            
+        self.searchResult?.uploadData() {
+        
             dispatch_async( dispatch_get_main_queue() ) {
                 collectionView.reloadData()
             }
+            
         }
     }
 }
