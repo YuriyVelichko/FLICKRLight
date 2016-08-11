@@ -8,7 +8,10 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+private let reuseIdentifier = "photoCell"
+private let cellSpacing : CGFloat = CGFloat( 5 )
+
+class SearchViewController: UIViewController, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
      var searchResult : FlickrSearchHandler?
 
@@ -18,6 +21,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // Register cell classes
+        
+        collectionView!.registerClass( CollectionViewCell.self,
+                                       forCellWithReuseIdentifier: reuseIdentifier)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,6 +33,49 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // MARK: UICollectionViewDataSource
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return searchResult?.imagesInfo.count ?? 0
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
+        
+        // Configure the cell
+        
+        if let data = searchResult?.dataAtIndex( indexPath.row ) {
+            cell.imageView.image = UIImage( data: data )
+        }
+        
+        return cell
+    }
+    
+    // MARK: - UIScrollViewDelegate
+    
+    func scrollViewDidScroll( _: UIScrollView) {
+        
+        if let lastVisiableCell = collectionView?.visibleCells().last {
+            let indexPath = collectionView?.indexPathForCell( lastVisiableCell )
+            
+            if searchResult?.needUploadInfo( (indexPath?.row)! ) ?? false {
+                uploadInfo()
+            } else {
+                if searchResult?.needUploadData((indexPath?.row)!) ?? false {
+                    uploadData()
+                }
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -55,5 +106,56 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             }
         }
 
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout API
+    
+    func collectionView( collectionView: UICollectionView,
+                         layout collectionViewLayout: UICollectionViewLayout,
+                                minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView( collectionView: UICollectionView,
+                         layout collectionViewLayout: UICollectionViewLayout,
+                                minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return cellSpacing
+    }
+    
+    func collectionView(collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        // Show 3 cells in the portrait orientation
+        
+        let screenSize  = UIScreen.mainScreen().bounds
+        let cellSize    = ( screenSize.width - CGFloat( cellSpacing * 2 ) ) / 3
+        
+        return CGSize( width: cellSize, height: cellSize )
+    }
+    
+    func uploadInfo(){
+        searchResult?.uploadInfo() { error in
+            
+            dispatch_async( dispatch_get_main_queue() ) {
+                if error != nil {
+                    NSLog( error.localizedDescription )
+                }
+                
+                self.collectionView?.reloadData()
+            }
+        }
+    }
+    
+    func uploadData(){
+        
+        dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) ) {
+            
+            self.searchResult?.uploadData()
+            
+            dispatch_async( dispatch_get_main_queue() ) {
+                self.collectionView?.reloadData()
+            }
+        }
     }
 }

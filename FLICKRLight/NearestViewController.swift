@@ -35,8 +35,8 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
 
         // Register cell classes
         
-        collectionView!.registerClass(CollectionViewCell.self,
-                                      forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.registerClass( CollectionViewCell.self,
+                                       forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
         
@@ -70,8 +70,6 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
             }            
         }
     }
-    
-
 
     // MARK: - Navigation
 
