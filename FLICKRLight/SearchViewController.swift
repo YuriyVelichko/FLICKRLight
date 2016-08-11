@@ -24,7 +24,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         collectionView.delegate = collectionController
         collectionView.dataSource = collectionController
         
-        collectionController.registerCell()
+        FlickrSearchCollectionViewController.registerCell( collectionView )
     }
 
     override func didReceiveMemoryWarning() {

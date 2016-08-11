@@ -23,7 +23,7 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         
-        registerCell()
+        FlickrSearchCollectionViewController.registerCell( collectionView! )
     }
 
     override func didReceiveMemoryWarning() {
@@ -122,8 +122,8 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
     
     // MARK: Internal Methods
     
-    func registerCell() {
-        collectionView!.registerClass( CollectionViewCell.self,
+    static func registerCell( collectionView : UICollectionView! ) {
+        collectionView.registerClass(  CollectionViewCell.self,
                                        forCellWithReuseIdentifier: reuseIdentifier)
     }
     
