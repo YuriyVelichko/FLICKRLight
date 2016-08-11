@@ -55,6 +55,20 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
         
         performSegueWithIdentifier( "showDetail", sender:self )
     }
+    
+    // MARK: - 
+    
+    override func scrollViewDidScroll( _: UIScrollView) {
+        
+        if let lastVisiableCell = collectionView?.visibleCells().last {
+            let indexPath = collectionView?.indexPathForCell( lastVisiableCell )
+            if searchResult?.needUploadData((indexPath?.row)!) ?? false {
+                uploadData()
+            }
+        }
+    }
+    
+
 
     // MARK: - Navigation
 
@@ -83,10 +97,6 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        if searchResult?.needUploadData(indexPath.row) ?? false {
-            uploadData()
-        }
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
     

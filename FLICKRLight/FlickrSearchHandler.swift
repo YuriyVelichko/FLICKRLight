@@ -65,7 +65,6 @@ class FlickrSearchHandler {
                             let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
                             for photoDictionary in photoArray {
                                 let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
-                                NSLog( photoURL.absoluteString )
                                 
                                 self.imagesInfo.append([ photoURL : NSData() ])
                             }
@@ -88,13 +87,15 @@ class FlickrSearchHandler {
                 let URL = pair.keys.first
                 imagesInfo[ index ].removeAll()
                 imagesInfo[ index ][ URL! ] = NSData(contentsOfURL: (pair.keys.first)! )!
+                
+                NSLog( "%ld -> %ld", index, maxIndex )
             }
             
             lastLoadedData = maxIndex
         } else {
             // Wait until new urls will be loaded
+            NSLog( "%ld", maxIndex )
         }
-        
     }
     
     func needUploadData( currentIndex : Int ) -> Bool {
