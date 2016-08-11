@@ -8,8 +8,12 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+     var searchResult : FlickrSearchHandler?
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,5 +35,25 @@ class SearchViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - UISearchBarDelegate
+    
+    
+    func searchBarSearchButtonClicked( theSearchBar : UISearchBar ) {
+        theSearchBar.resignFirstResponder()
+        
+        let options = [ "text" : theSearchBar.text! ]
+        searchResult = FlickrSearchHandler( options: options )
+        searchResult?.uploadInfo(){ error in
+            
+            dispatch_async( dispatch_get_main_queue() ) {
+                if error != nil {
+                    NSLog( error.localizedDescription )
+                }
+                
+                self.collectionView?.reloadData()
+            }
+        }
 
+    }
 }

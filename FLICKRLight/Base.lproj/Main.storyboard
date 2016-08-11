@@ -59,6 +59,9 @@
                                     <constraint firstAttribute="height" constant="44" id="PWj-Z4-Cre"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="L0i-b8-Ac1" id="4N9-cQ-DzI"/>
+                                </connections>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="N9V-q6-tUU">
                                 <rect key="frame" x="0.0" y="108" width="600" height="443"/>
@@ -93,6 +96,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0fl-sL-Hrd"/>
+                    <connections>
+                        <outlet property="collectionView" destination="N9V-q6-tUU" id="u8s-1t-aml"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J79-Yl-UbR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -166,7 +172,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cc4-Ey-p06">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cc4-Ey-p06">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                             </imageView>
                         </subviews>
