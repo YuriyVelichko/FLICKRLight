@@ -20,6 +20,9 @@ class FlickrSearchHandler {
     private let chunkSize       = 100
     private var lastPage        = 0
     
+    private var loadingCompleete = false
+    private var updatingData    = false
+    
     var imagesInfo      : [[NSURL : NSData]] = []
     var searchOptions   : [String : String]
 
@@ -27,12 +30,9 @@ class FlickrSearchHandler {
     
     init( options: [String : String] ){
         
-        var finalOptions = options
-        finalOptions[ "api_key" ] = flickrKey
-        finalOptions[ "page" ] = String( lastPage + 1 )
-        finalOptions[ "per_page"] = String( chunkSize )
-        
-        searchOptions = finalOptions
+        searchOptions = options
+        searchOptions[ "api_key" ] = flickrKey
+        searchOptions[ "per_page"] = String( chunkSize )
         
         let fk = FlickrKit.sharedFlickrKit()
         if fk.apiKey == nil{
@@ -43,41 +43,64 @@ class FlickrSearchHandler {
     // MARK - methods
     func uploadInfo( completion: (NSError!) -> Void) {
         
+        if loadingCompleete {
+            return
+        }
+        
+        objc_sync_enter( updatingData )
+        
         let fk = FlickrKit.sharedFlickrKit()
+        
+        searchOptions[ "page" ] = String( lastPage + 1 )
         
         NSLog( searchOptions.description )
         
-        fk.call(    "flickr.photos.search",
-                    args: searchOptions
-                    , maxCacheAge: FKDUMaxAgeOneHour ) {
-                    (response, error) -> Void in
+        fk.call( "flickr.photos.search", args: searchOptions, maxCacheAge: FKDUMaxAgeOneHour )
+        { (response, error) -> Void in
                     
-                    if error == nil
-                    {
-                        if (response != nil) {
-                            // Pull out the photo urls from the results
-                            let topPhotos = response["photos"] as! [NSObject: AnyObject]
-                            
-                            if let page = topPhotos["page"] {
-                                self.lastPage = page as! Int
-                            }
-                            
-                            let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
-                            for photoDictionary in photoArray {
-                                let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
-                                
-                                self.imagesInfo.append([ photoURL : NSData() ])
-                            }
-                            
-                            self.uploadData();
+            if error == nil
+            {
+                if (response != nil) {
+                    // Pull out the photo urls from the results
+                    let topPhotos = response["photos"] as! [NSObject: AnyObject]
+                    
+                    if let page = topPhotos["page"] {
+                        
+                        let pageValue = page as! Int;
+                        
+                        let pages = topPhotos["pages"] as? Int ?? 0
+                        if pageValue == pages {
+                            self.loadingCompleete = true
+                        } else {
+                            self.lastPage = pageValue
                         }
                     }
+                    
+                    let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
+                    for photoDictionary in photoArray {
+                        let photoURL = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
                         
-                    completion( error )
+                        self.imagesInfo.append([ photoURL : NSData() ])
+                    }
+                    
+                    self.uploadData();
+                }
+            }
+                
+            completion( error )
         }
+        
+        objc_sync_exit( updatingData )
     }
     
     func uploadData() {
+        
+        if updatingData {
+            return
+        }
+        
+        objc_sync_enter( updatingData )
+        updatingData = true
         
         let maxIndex = imagesInfo.count - lastLoadedData > 30 ? lastLoadedData + 30 : imagesInfo.count - 1
         
@@ -96,10 +119,17 @@ class FlickrSearchHandler {
             // Wait until new urls will be loaded
             NSLog( "%ld", maxIndex )
         }
+        
+        updatingData = false
+        objc_sync_exit( updatingData )
     }
     
     func needUploadData( currentIndex : Int ) -> Bool {
-        return lastLoadedData - currentIndex < 50
+        return !updatingData && lastLoadedData - currentIndex < 30
+    }
+    
+    func needUploadInfo( currentIndex : Int ) -> Bool {
+        return imagesInfo.count - currentIndex < 30
     }
     
     func dataAtIndex( index : Int ) -> NSData? {

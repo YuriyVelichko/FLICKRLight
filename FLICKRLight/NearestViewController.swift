@@ -15,8 +15,6 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
     
     var searchResult : FlickrSearchHandler?
     
-    var loading = false
-    
     convenience init(){
         self.init()
         
@@ -56,15 +54,20 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
         performSegueWithIdentifier( "showDetail", sender:self )
     }
     
-    // MARK: - 
+    // MARK: - UIScrollViewDelegate
     
     override func scrollViewDidScroll( _: UIScrollView) {
         
         if let lastVisiableCell = collectionView?.visibleCells().last {
             let indexPath = collectionView?.indexPathForCell( lastVisiableCell )
-            if searchResult?.needUploadData((indexPath?.row)!) ?? false {
-                uploadData()
-            }
+            
+            if searchResult?.needUploadInfo( (indexPath?.row)! ) ?? false {
+                uploadInfo()
+            } else {
+                if searchResult?.needUploadData((indexPath?.row)!) ?? false {
+                    uploadData()
+                }
+            }            
         }
     }
     
@@ -102,7 +105,9 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
     
         // Configure the cell
   
-        cell.imageView.image = UIImage( data: (searchResult?.dataAtIndex( indexPath.row ))! )
+        if let data = searchResult?.dataAtIndex( indexPath.row ) {
+            cell.imageView.image = UIImage( data: data )
+        }
     
         return cell
     }
@@ -186,22 +191,14 @@ class NearestViewController: UICollectionViewController, UICollectionViewDelegat
     
     func uploadData(){
         
-        if !loading {
+        dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) ) {
             
-            loading = true
-        
-            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) ) {
-                
-                self.searchResult?.uploadData()
-                
-                dispatch_async( dispatch_get_main_queue() ) {
-                    
-                    self.loading = false
-                    self.collectionView?.reloadData()
-                }
+            self.searchResult?.uploadData()
+            
+            dispatch_async( dispatch_get_main_queue() ) {
+                self.collectionView?.reloadData()
             }
         }
-
     }
     
     func createRequestParams() -> [String : String]! {
