@@ -179,18 +179,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cc4-Ey-p06">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cc4-Ey-p06">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cc4-Ey-p06" firstAttribute="leading" secondItem="HUb-2G-WBk" secondAttribute="leading" id="1N3-AY-K2d"/>
+                            <constraint firstItem="cc4-Ey-p06" firstAttribute="top" secondItem="gKn-0n-x9w" secondAttribute="bottom" id="49Y-vl-mOz"/>
                             <constraint firstItem="flB-HV-CVE" firstAttribute="top" secondItem="cc4-Ey-p06" secondAttribute="bottom" id="74L-wu-ykB"/>
                             <constraint firstAttribute="trailing" secondItem="cc4-Ey-p06" secondAttribute="trailing" id="J94-vC-Y67"/>
                             <constraint firstItem="cc4-Ey-p06" firstAttribute="top" secondItem="gKn-0n-x9w" secondAttribute="bottom" id="Kim-6F-uQc"/>
+                            <constraint firstItem="flB-HV-CVE" firstAttribute="top" secondItem="cc4-Ey-p06" secondAttribute="bottom" id="g6C-ZL-Egd"/>
+                            <constraint firstItem="cc4-Ey-p06" firstAttribute="leading" secondItem="HUb-2G-WBk" secondAttribute="leading" id="kki-x2-Pqt"/>
+                            <constraint firstAttribute="trailing" secondItem="cc4-Ey-p06" secondAttribute="trailing" id="m2B-Uz-Dyc"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1N3-AY-K2d"/>
+                                <exclude reference="J94-vC-Y67"/>
+                                <exclude reference="Kim-6F-uQc"/>
+                                <exclude reference="74L-wu-ykB"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="cc4-Ey-p06" id="0eT-Sg-YbT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sP6-xW-yCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -202,6 +217,6 @@
         <image name="search" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Qg-ae-jHt"/>
+        <segue reference="quT-dU-TId"/>
     </inferredMetricsTieBreakers>
 </document>

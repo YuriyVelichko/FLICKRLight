@@ -33,11 +33,13 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func collectionView( collectionView: UICollectionView,
-                                   didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(   collectionView: UICollectionView,
+                                    didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if let ctr = topCotroller {
             ctr.performSegue()
+        } else {
+            performSegueWithIdentifier( "showDetail", sender:collectionView )
         }
     }
     
@@ -67,10 +69,11 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
         // Pass the selected object to the new view controller.
         
         if  let detailView = segue.destinationViewController as? DetailViewController,
-            let cell = sender as? UICollectionViewCell {
+            let collectionView = sender as? UICollectionView {
             
-            
-            
+            if let indexPath = collectionView.indexPathsForSelectedItems()?.first{
+                detailView.data = searchResult?.dataAtIndex(indexPath.row) ?? NSData()
+            }
         }
     }
 

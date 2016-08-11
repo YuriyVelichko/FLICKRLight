@@ -9,11 +9,18 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    @IBOutlet weak var imageView: UIImageView!
+    var data : NSData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if let internalData = data {
+            imageView.image = UIImage( data: internalData )
+        }
     }
 
     override func didReceiveMemoryWarning() {
