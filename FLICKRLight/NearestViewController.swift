@@ -31,7 +31,7 @@ class NearestViewController: FlickrSearchCollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        uploadInfo()
+        uploadInfo( collectionView! )
     }
 
     override func didReceiveMemoryWarning() {

@@ -21,6 +21,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionController.topCotroller = self
+        
         collectionView.delegate = collectionController
         collectionView.dataSource = collectionController
         
@@ -53,5 +55,20 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }
 
     }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        
+
+    }
+    
+    func performSegue() {
+        
+        performSegueWithIdentifier( "showDetail", sender:self )
+    }
+
+
     
 }

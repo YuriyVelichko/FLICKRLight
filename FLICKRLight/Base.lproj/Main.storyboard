@@ -81,6 +81,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <segue destination="7Nf-9T-7BU" kind="show" identifier="showDetail" id="quT-dU-TId"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -198,4 +201,7 @@
         <image name="location" width="32" height="32"/>
         <image name="search" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="6Qg-ae-jHt"/>
+    </inferredMetricsTieBreakers>
 </document>

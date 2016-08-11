@@ -15,6 +15,8 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
 
     var searchResult : FlickrSearchHandler?
     
+    weak var topCotroller : SearchViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,21 +36,24 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
     override func collectionView( collectionView: UICollectionView,
                                    didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        performSegueWithIdentifier( "showDetail", sender:self )
+        if let ctr = topCotroller {
+            ctr.performSegue()
+        }
     }
     
     // MARK: - UIScrollViewDelegate
     
-    override func scrollViewDidScroll( _: UIScrollView) {
+    override func scrollViewDidScroll( scrollView : UIScrollView) {
         
-        if let lastVisiableCell = collectionView?.visibleCells().last {
-            let indexPath = collectionView?.indexPathForCell( lastVisiableCell )
+        if  let collectionView = scrollView as? UICollectionView,
+            let lastVisiableCell = collectionView.visibleCells().last {
+            let indexPath = collectionView.indexPathForCell( lastVisiableCell )
             
             if searchResult?.needUploadInfo( (indexPath?.row)! ) ?? false {
-                uploadInfo()
+                uploadInfo( collectionView )
             } else {
                 if searchResult?.needUploadData((indexPath?.row)!) ?? false {
-                    uploadData()
+                    uploadData( collectionView )
                 }
             }            
         }
@@ -62,7 +67,9 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
         // Pass the selected object to the new view controller.
         
         if  let detailView = segue.destinationViewController as? DetailViewController,
-            let indexPath = collectionView?.indexPathsForSelectedItems()?.first {
+            let cell = sender as? UICollectionViewCell {
+            
+            
             
         }
     }
@@ -127,7 +134,7 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
                                        forCellWithReuseIdentifier: reuseIdentifier)
     }
     
-    func uploadInfo(){
+    func uploadInfo( collectionView : UICollectionView ){
         searchResult?.uploadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
@@ -135,19 +142,19 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
                     NSLog( error.localizedDescription )
                 }                
                 
-                self.collectionView?.reloadData()
+                collectionView.reloadData()
             }
         }
     }
     
-    func uploadData(){
+    func uploadData( collectionView : UICollectionView ){
         
         dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) ) {
             
             self.searchResult?.uploadData()
             
             dispatch_async( dispatch_get_main_queue() ) {
-                self.collectionView?.reloadData()
+                collectionView.reloadData()
             }
         }
     }
