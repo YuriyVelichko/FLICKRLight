@@ -7,31 +7,33 @@
 //
 
 import UIKit
+import CoreLocation
 
 private let reuseIdentifier = "photoCell"
 private let cellSpacing : CGFloat = CGFloat( 5 )
 
-class NearestViewController: FlickrSearchCollectionViewController {
+class NearestViewController: FlickrSearchCollectionViewController, CLLocationManagerDelegate {
     
-    convenience init(){
-        self.init()
-        
-        initSearchResult()
-    }
+    let locationManager = CLLocationManager()
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init( coder: aDecoder )
-        
-        initSearchResult()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
-        uploadInfo( collectionView! )
+        
+        // Ask for Authorisation from the User.
+        locationManager.requestAlwaysAuthorization()
+        
+        // For use in foreground
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.distanceFilter = 100.0;
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,19 +44,22 @@ class NearestViewController: FlickrSearchCollectionViewController {
     
     // MARK: Internal Methods
     
-    func initSearchResult() {
-        let options = createRequestParams()
-        searchResult = FlickrSearchHandler( options: options )
-    }
     
-    func createRequestParams() -> [String : String]! {
-        var res : [String : String] = [:]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        res[ "lat" ] = "46.6354";
-        res[ "lon" ] = "32.6169";
-        res[ "radius" ] = "5";
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
-        return res;
+        let options = [ "lat"       : String( locValue.latitude ),
+                        "lon"       : String( locValue.longitude ),
+                        "radius"    : "1" ];
+
+        searchResult = FlickrSearchHandler( options: options )
+        
+        dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
+                        Int64(1.5 * Double(NSEC_PER_SEC))),
+                        dispatch_get_main_queue()) {
+            self.uploadInfo( self.collectionView! )
+        }
     }
 
 }
