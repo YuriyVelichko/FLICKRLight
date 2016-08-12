@@ -26,7 +26,7 @@ class SearchHandler {
     
     private var lastLoadedData      = -1
     private var lastPage            = 0
-    private let chunkSize           = 200
+    private let photosPerPage       = 200
 
     private let updateImagesBound   : Int
     private var loadingComplete     = false
@@ -48,7 +48,7 @@ class SearchHandler {
         
         searchOptions = options
         searchOptions[ "api_key" ] = flickrKey
-        searchOptions[ "per_page"] = String( chunkSize )
+        searchOptions[ "per_page"] = String( photosPerPage )
         
         let fk = FlickrKit.sharedFlickrKit()
         if fk.apiKey == nil{
@@ -167,7 +167,7 @@ class SearchHandler {
     
     func needdownloadInfo( currentIndex : Int ) -> Bool {
         
-        return !loadingComplete && imagesInfo.count - currentIndex < ( chunkSize / 2 )
+        return !loadingComplete && imagesInfo.count - currentIndex < ( photosPerPage / 2 )
     }
     
     func dataAtIndex( index : Int ) -> NSData? {
