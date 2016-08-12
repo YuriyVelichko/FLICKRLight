@@ -15,7 +15,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionController = CollectionViewController()
+    var collectionController    = CollectionViewController()
     
     private var lastSearchedText = ""
     
@@ -62,7 +62,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let options = [ "text" : text ]
         
         collectionController.searchResult = SearchHandler( options: options )
-        collectionController.downloadInfo( collectionView )
+        collectionController.imagesCache.clearCache()
+        
+        dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
+            Int64(1.5 * Double(NSEC_PER_SEC))),
+                        dispatch_get_main_queue()) {
+                            
+            self.collectionController.downloadInfo( self.collectionView )
+        }        
     }
     
     // MARK: - Naviagion (proxy for internal controller)

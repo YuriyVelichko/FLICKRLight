@@ -9,30 +9,29 @@
 import Foundation
 import AlamofireImage
 
-
 class ImagesCache {
     
-    static let sharedCache = ImagesCache()
-    
-    let downloader = ImageDownloader()
-    let imageCache : AutoPurgingImageCache
+    private let downloader  = ImageDownloader()
+    private let cache       : AutoPurgingImageCache
 
     
     // MARK: - initializer
     
     init()
     {
-        imageCache = AutoPurgingImageCache(
+        cache = AutoPurgingImageCache(
             memoryCapacity: 100 * 1024 * 1024,
             preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
         )
     }
     
-    func updateImage( url : NSURL, completion: (image : UIImage?) -> Void )
+    // MARK: - methods
+    
+    func updateImage( url: NSURL, completion: (image : UIImage?) -> Void )
     {
         let URLRequest = NSURLRequest( URL: url )
         
-        if let cachedImage = imageCache.imageForRequest( URLRequest, withAdditionalIdentifier: "image" ) {
+        if let cachedImage = cache.imageForRequest( URLRequest, withAdditionalIdentifier: "image" ) {
             NSLog( "FROM: CACHE")
             completion( image: cachedImage )
         } else {
@@ -42,7 +41,7 @@ class ImagesCache {
                 
                 if let image = response.result.value {
                     
-                    self.imageCache.addImage(
+                    self.cache.addImage(
                         image,
                         forRequest: URLRequest,
                         withAdditionalIdentifier: "image"
@@ -52,5 +51,9 @@ class ImagesCache {
                 }
             }
         }
+    }
+    
+    func clearCache() {
+        cache.removeAllImages()
     }
 }

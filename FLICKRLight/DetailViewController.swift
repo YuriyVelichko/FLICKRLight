@@ -15,7 +15,8 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    var url : NSURL?
+    weak var cache  : ImagesCache?
+    var url         : NSURL?
     
     // transform properties
     private var scale               = CGFloat(1)
@@ -32,8 +33,7 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
             
             SVProgressHUD.showWithStatus( "Fetching Image..." )
             
-            let cache = ImagesCache.sharedCache            
-            cache.updateImage( dataURL ) { image in
+            cache?.updateImage( dataURL ) { image in
                 dispatch_async( dispatch_get_main_queue() ) {
                     self.imageView.image = image
                     SVProgressHUD.dismiss()

@@ -10,15 +10,13 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    var imageView: UIImageView!
-    
+    var imageView   : UIImageView!
+    weak var cache  : ImagesCache?
+
     var url: NSURL? {
         
         didSet {
-            
-            let cache = ImagesCache.sharedCache
-            
-            cache.updateImage( url! ) { image in
+            cache?.updateImage( url! ) { image in
                 dispatch_async( dispatch_get_main_queue() ) {
                     self.imageView.image = image
                 }

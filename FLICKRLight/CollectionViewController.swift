@@ -20,6 +20,9 @@ class CollectionViewController: UICollectionViewController {
     weak var topController      : SearchViewController?
     private var visibleCells    : [NSIndexPath] = []
     
+    let imagesCache             = ImagesCache()
+
+    
     // MARK: - UIView
     
     override func viewDidLoad() {
@@ -79,6 +82,11 @@ class CollectionViewController: UICollectionViewController {
             let collectionView = sender as? UICollectionView {
             
             if let indexPath = collectionView.indexPathsForSelectedItems()?.first{
+                
+                if detailView.cache == nil {
+                    detailView.cache = imagesCache
+                }
+                
                 detailView.url = searchResult?.imagesInfo[indexPath.row].urlOrigin
             }
         }
@@ -101,6 +109,10 @@ class CollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
     
         // Configure the cell
+        
+        if cell.cache == nil {
+            cell.cache = imagesCache
+        }
         
         cell.url = searchResult?.imagesInfo[ indexPath.row ].urlCollection
 
