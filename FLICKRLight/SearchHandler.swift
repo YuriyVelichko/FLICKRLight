@@ -17,7 +17,7 @@ struct SearchResult {
     var dataCollection  : NSData?
 }
 
-class FlickrSearchHandler {
+class SearchHandler {
     
     // MARK: - properties
     

@@ -16,7 +16,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var collectionController = FlickrSearchCollectionViewController()
+    var collectionController = CollectionViewController()
     
     private var lastSearchedText = ""
     
@@ -28,7 +28,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         collectionView.delegate = collectionController
         collectionView.dataSource = collectionController
         
-        FlickrSearchCollectionViewController.registerCell( collectionView )
+        CollectionViewController.registerCell( collectionView )
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +66,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         let options = [ "text" : text ]
         
-        collectionController.searchResult = FlickrSearchHandler( options: options )
+        collectionController.searchResult = SearchHandler( options: options )
         collectionController.uploadInfo( collectionView )
     }
     

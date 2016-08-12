@@ -12,9 +12,9 @@ import SVProgressHUD
 private let reuseIdentifier = "photoCell"
 private let cellSpacing : CGFloat = CGFloat( 5 )
 
-class FlickrSearchCollectionViewController: UICollectionViewController {
+class CollectionViewController: UICollectionViewController {
 
-    var searchResult : FlickrSearchHandler?
+    var searchResult : SearchHandler?
     
     weak var topController : SearchViewController?
     
@@ -28,7 +28,7 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         
-        FlickrSearchCollectionViewController.registerCell( collectionView! )
+        CollectionViewController.registerCell( collectionView! )
     }
 
     override func didReceiveMemoryWarning() {

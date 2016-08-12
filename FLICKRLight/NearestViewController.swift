@@ -13,7 +13,7 @@ import SVProgressHUD
 private let reuseIdentifier = "photoCell"
 private let cellSpacing : CGFloat = CGFloat( 5 )
 
-class NearestViewController: FlickrSearchCollectionViewController, CLLocationManagerDelegate {
+class NearestViewController: CollectionViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     
@@ -56,10 +56,11 @@ class NearestViewController: FlickrSearchCollectionViewController, CLLocationMan
                         "lon"       : lon,
                         "radius"    : "1" ];
         
-        SVProgressHUD.showWithStatus( String( format: "Fetching data for location [Latitude: %@ Longitude: %@]", lat, lon ) )
+        if self.navigationController?.tabBarController?.selectedIndex == 0 {
+            SVProgressHUD.showWithStatus( String( format: "Fetching data for location [Latitude: %@ Longitude: %@]", lat, lon ) )
+        }
 
-
-        searchResult = FlickrSearchHandler( options: options )
+        searchResult = SearchHandler( options: options )
         
         dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
                         Int64(1.5 * Double(NSEC_PER_SEC))),
