@@ -81,7 +81,7 @@
                                     <outlet property="delegate" destination="L0i-b8-Ac1" id="sca-nv-6Cd"/>
                                 </connections>
                             </collectionView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="UK0-My-sfJ">
+                            <searchBar contentMode="redraw" placeholder="Put the search request" translatesAutoresizingMaskIntoConstraints="NO" id="UK0-My-sfJ">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="PWj-Z4-Cre"/>
