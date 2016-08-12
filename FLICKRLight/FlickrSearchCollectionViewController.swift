@@ -124,8 +124,9 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
         
         // Show 3 cells in the portrait orientation
         
-        let screenSize  = UIScreen.mainScreen().bounds
-        let cellSize    = ( screenSize.width - CGFloat( cellSpacing * 2 ) ) / 3
+        let screenSize      = UIScreen.mainScreen().bounds
+        let portraitWidth   = min( screenSize.width, screenSize.height )
+        let cellSize        = ( portraitWidth - CGFloat( cellSpacing * 2 ) ) / 3
         
         return CGSize( width: cellSize, height: cellSize )
     }
