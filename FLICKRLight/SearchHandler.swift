@@ -28,8 +28,8 @@ class SearchHandler {
     private var lastPage            = 0
     private let chunkSize           = 200
 
-    private let updateImgaesBound   : Int
-    private var loadingCompleete    = false
+    private let updateImagesBound   : Int
+    private var loadingComplete     = false
     private var updatingData        = false
     private var updatingInfo        = false
     
@@ -41,9 +41,9 @@ class SearchHandler {
     init( options: [String : String] ){
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            updateImgaesBound = 60
+            updateImagesBound = 60
         } else {
-            updateImgaesBound = 30
+            updateImagesBound = 30
         }
         
         searchOptions = options
@@ -60,7 +60,7 @@ class SearchHandler {
     
     func uploadInfo( completion: (NSError!) -> Void ) {
         
-        if loadingCompleete || updatingInfo {
+        if loadingComplete || updatingInfo {
             return
         }
         
@@ -87,7 +87,7 @@ class SearchHandler {
                         let pages = topPhotos["pages"] as? Int ?? 0
                         
                         if pageValue == pages {
-                            self.loadingCompleete = true
+                            self.loadingComplete = true
                         } else {
                             self.lastPage = pageValue
                         }
@@ -129,8 +129,8 @@ class SearchHandler {
         
             // Need to upload a little bunch of photos, not all required
             
-            let maxIndex = (    self.imagesInfo.count - self.lastLoadedData > self.updateImgaesBound ) ?
-                                self.lastLoadedData + self.updateImgaesBound :
+            let maxIndex = (    self.imagesInfo.count - self.lastLoadedData > self.updateImagesBound ) ?
+                                self.lastLoadedData + self.updateImagesBound :
                                 self.imagesInfo.count - 1
             
             if self.lastLoadedData < maxIndex {
@@ -162,12 +162,12 @@ class SearchHandler {
     }
     
     func needUploadData( currentIndex : Int ) -> Bool {
-        return !updatingData && lastLoadedData - currentIndex < updateImgaesBound
+        return !updatingData && lastLoadedData - currentIndex < updateImagesBound
     }
     
     func needUploadInfo( currentIndex : Int ) -> Bool {
         
-        return !loadingCompleete && imagesInfo.count - currentIndex < ( chunkSize / 2 )
+        return !loadingComplete && imagesInfo.count - currentIndex < ( chunkSize / 2 )
     }
     
     func dataAtIndex( index : Int ) -> NSData? {
