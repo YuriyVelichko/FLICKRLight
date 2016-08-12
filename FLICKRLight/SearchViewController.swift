@@ -39,14 +39,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - UIViewController (proxy for internal controller)
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        
-        collectionController.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-    }
-    
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-        
-        collectionController.didRotateFromInterfaceOrientation(fromInterfaceOrientation)
+    override func viewWillTransitionToSize( size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        collectionController.viewWillTransitionToSize( size, withTransitionCoordinator: coordinator )
     }
     
     // MARK: - UISearchBarDelegate

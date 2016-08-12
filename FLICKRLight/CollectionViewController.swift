@@ -35,15 +35,17 @@ class CollectionViewController: UICollectionViewController {
 
     // MARK: - UICollectionViewController
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func viewWillTransitionToSize( size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
         visibleCells = managedCollectionView()?.indexPathsForVisibleItems() ?? []
-    }
-    
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         
-        if !visibleCells.isEmpty {
-            managedCollectionView()?.scrollToItemAtIndexPath( visibleCells[0], atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+        coordinator.animateAlongsideTransition(nil) { _ in
+            
+            if !self.visibleCells.isEmpty {
+                self.managedCollectionView()?.scrollToItemAtIndexPath( self.visibleCells[0], atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+            }
         }
     }
     
