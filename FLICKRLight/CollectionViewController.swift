@@ -25,9 +25,6 @@ class CollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         // Register cell classes
         
         CollectionViewController.registerCell( collectionView! )
@@ -70,11 +67,7 @@ class CollectionViewController: UICollectionViewController {
             
             if searchResult?.needdownloadInfo( (indexPath?.row)! ) ?? false {
                 downloadInfo( collectionView )
-            } else {
-                if searchResult?.needdownloadData((indexPath?.row)!) ?? false {
-                    downloadData( collectionView )
-                }
-            }            
+            }
         }
     }
 
@@ -108,11 +101,9 @@ class CollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
     
         // Configure the cell
-  
-        if let data = searchResult?.dataAtIndex( indexPath.row ) {
-            cell.imageView.image = UIImage( data: data )
-        }
-    
+        
+        cell.url = searchResult?.imagesInfo[ indexPath.row ].urlCollection
+
         return cell
     }
     
@@ -168,16 +159,6 @@ class CollectionViewController: UICollectionViewController {
                 SVProgressHUD.dismiss()
                 collectionView.reloadData()
             }
-        }
-    }
-    
-    func downloadData( collectionView : UICollectionView ){
-        
-        self.searchResult?.downloadData() {
-        
-            dispatch_async( dispatch_get_main_queue() ) {
-                collectionView.reloadData()
-            }            
         }
     }
     

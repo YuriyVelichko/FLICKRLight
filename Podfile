@@ -9,5 +9,6 @@ target 'FLICKRLight' do
 
   pod 'SVProgressHUD'
   pod 'FlickrKit'
+  pod 'AlamofireImage', '~> 2.0'
 
 end

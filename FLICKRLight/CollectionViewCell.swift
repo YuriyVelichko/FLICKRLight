@@ -12,6 +12,20 @@ class CollectionViewCell: UICollectionViewCell {
     
     var imageView: UIImageView!
     
+    var url: NSURL? {
+        
+        didSet {
+            
+            let cache = ImagesCache.sharedCache
+            
+            cache.updateImage( url! ) { image in
+                dispatch_async( dispatch_get_main_queue() ) {
+                    self.imageView.image = image
+                }
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -24,4 +38,7 @@ class CollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    // MARK: - internal methods
+
 }
