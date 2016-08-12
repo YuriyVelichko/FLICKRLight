@@ -25,9 +25,10 @@ class FlickrSearchHandler {
     private let flickrSecret    = "20b65be7d58394e9"
     
     private var lastLoadedData  = -1
-    private let chunkSize       = 200
     private var lastPage        = 0
-    
+    private let chunkSize       = 200
+
+    private let updateImgaesBound : Int
     private var loadingCompleete = false
     private var updatingData    = false
     private var updatingInfo   = false
@@ -38,6 +39,12 @@ class FlickrSearchHandler {
     // MARK - initializers
     
     init( options: [String : String] ){
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            updateImgaesBound = 60
+        } else {
+            updateImgaesBound = 30
+        }
         
         searchOptions = options
         searchOptions[ "api_key" ] = flickrKey
@@ -119,7 +126,9 @@ class FlickrSearchHandler {
         
         dispatch_async( dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 ) ) {
         
-            let maxIndex = self.imagesInfo.count - self.lastLoadedData > 30 ? self.lastLoadedData + 30 : self.imagesInfo.count - 1
+            let maxIndex = ( self.imagesInfo.count - self.lastLoadedData > self.updateImgaesBound ) ?
+                            self.lastLoadedData + self.updateImgaesBound :
+                            self.imagesInfo.count - 1
             
             if self.lastLoadedData < maxIndex {
                 for index in (self.lastLoadedData + 1) ... maxIndex {
@@ -148,7 +157,7 @@ class FlickrSearchHandler {
     }
     
     func needUploadData( currentIndex : Int ) -> Bool {
-        return !updatingData && lastLoadedData - currentIndex < 30
+        return !updatingData && lastLoadedData - currentIndex < updateImgaesBound
     }
     
     func needUploadInfo( currentIndex : Int ) -> Bool {

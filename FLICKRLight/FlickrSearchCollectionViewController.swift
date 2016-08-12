@@ -140,11 +140,17 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
                         layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        // Show 3 cells in the portrait orientation
+        // Show 3 cells for iPhone and 5 cells for iPad in the portrait orientation
         
         let screenSize      = UIScreen.mainScreen().bounds
         let portraitWidth   = min( screenSize.width, screenSize.height )
-        let cellSize        = ( portraitWidth - CGFloat( cellSpacing * 2 ) ) / 3
+        
+        var perRow : CGFloat = 3
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            perRow = 5
+        }
+        
+        let cellSize = ( ( portraitWidth - CGFloat( cellSpacing * CGFloat( perRow - 1 ) ) ) / perRow )
         
         return CGSize( width: cellSize, height: cellSize )
     }
