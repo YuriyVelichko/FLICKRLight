@@ -40,7 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
+
+extension UIViewController {
+    func showAlertInMainQueue( msg : String ) {
+        
+        let alert = UIAlertController(title: "Alert", message: msg, preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil)
+        
+        alert.addAction( action )
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+}
+
 

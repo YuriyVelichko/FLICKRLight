@@ -11,14 +11,17 @@ import SVProgressHUD
 
 class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    // MARK: - properties
+    
     @IBOutlet weak var imageView: UIImageView!
     
+    var url : NSURL?
+    
+    // transform properties
     private var scale               = CGFloat(1)
     private var previousScale       = CGFloat(1)
     private var rotation            = CGFloat(0)
     private var previousRotation    = CGFloat(0)
-    
-    var url : NSURL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +31,6 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
         if let dataURL = self.url {
             
             SVProgressHUD.showWithStatus( "Fetching Image..." )
-            NSLog( "%@", dataURL.absoluteString )
             
             dispatch_async( dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 ) ) {
                 if let data = NSData( contentsOfURL:dataURL ) {
@@ -39,9 +41,12 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
                     }
                 }
             }
-        } else {
             
+        } else {
+            showAlertInMainQueue( "There datasource URL is empty" )
         }
+        
+        // Gesture recognizers
         
         imageView.userInteractionEnabled = true
         
@@ -68,18 +73,7 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     func gestureRecognizer( gestureRecognizer: UIGestureRecognizer,
                             shouldRecognizeSimultaneouslyWithGestureRecognizer
                             otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -143,5 +137,4 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
             self.imageView.transform = CGAffineTransformIdentity
         })
     }
-
 }

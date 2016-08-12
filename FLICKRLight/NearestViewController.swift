@@ -10,18 +10,17 @@ import UIKit
 import CoreLocation
 import SVProgressHUD
 
-private let reuseIdentifier = "photoCell"
-private let cellSpacing : CGFloat = CGFloat( 5 )
 
 class NearestViewController: CollectionViewController, CLLocationManagerDelegate {
     
+    // MARK: - properties
+    
     let locationManager = CLLocationManager()
+    
+    // MARK: - initializer
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
         // Ask for Authorisation from the User.
         locationManager.requestAlwaysAuthorization()
@@ -42,9 +41,7 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    
-    // MARK: Internal Methods
-    
+    // MARK: CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -68,5 +65,4 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
             self.uploadInfo( self.collectionView! )
         }
     }
-
 }

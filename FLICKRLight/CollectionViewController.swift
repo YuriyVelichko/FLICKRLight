@@ -10,15 +10,17 @@ import UIKit
 import SVProgressHUD
 
 private let reuseIdentifier = "photoCell"
-private let cellSpacing : CGFloat = CGFloat( 5 )
+private let cellSpacing     = CGFloat( 5 )
 
 class CollectionViewController: UICollectionViewController {
+    
+    // MARK: - properties
 
-    var searchResult : SearchHandler?
+    var searchResult            : SearchHandler?
+    weak var topController      : SearchViewController?
+    private var visibleCells    : [NSIndexPath] = []
     
-    weak var topController : SearchViewController?
-    
-    private var visibleCells : [NSIndexPath] = []
+    // MARK: - UIView
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,22 +33,7 @@ class CollectionViewController: UICollectionViewController {
         CollectionViewController.registerCell( collectionView! )
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func collectionView(   collectionView: UICollectionView,
-                                    didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        if let ctr = topController {
-            ctr.performSegue()
-        } else {
-            performSegueWithIdentifier( "showDetail", sender:collectionView )
-        }
-    }
-    
-    // MARK: - UIViewController
+    // MARK: - UICollectionViewController
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         
@@ -60,12 +47,23 @@ class CollectionViewController: UICollectionViewController {
         }
     }
     
+    override func collectionView(   collectionView: UICollectionView,
+                                    didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let ctr = topController {
+            ctr.performSegue()
+        } else {
+            performSegueWithIdentifier( "showDetail", sender:collectionView )
+        }
+    }
+    
     // MARK: - UIScrollViewDelegate
     
     override func scrollViewDidScroll( scrollView : UIScrollView) {
         
         if  let collectionView = scrollView as? UICollectionView,
             let lastVisibleCell = collectionView.visibleCells().last {
+            
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
             if searchResult?.needUploadInfo( (indexPath?.row)! ) ?? false {
@@ -77,14 +75,10 @@ class CollectionViewController: UICollectionViewController {
             }            
         }
     }
-    
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
         
         if  let detailView = segue.destinationViewController as? DetailViewController,
             let collectionView = sender as? UICollectionView {
@@ -98,10 +92,9 @@ class CollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+
         return 1
     }
-
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
@@ -120,7 +113,6 @@ class CollectionViewController: UICollectionViewController {
     
         return cell
     }
-
     
     // MARK: UICollectionViewDelegateFlowLayout API
     
@@ -155,7 +147,7 @@ class CollectionViewController: UICollectionViewController {
         return CGSize( width: cellSize, height: cellSize )
     }
     
-    // MARK: Internal Methods
+    // MARK: - methods
     
     static func registerCell( collectionView : UICollectionView! ) {
         collectionView.registerClass(  CollectionViewCell.self,
@@ -186,6 +178,8 @@ class CollectionViewController: UICollectionViewController {
             }            
         }
     }
+    
+    // MARK: - internal methods
     
     private func managedCollectionView() -> UICollectionView? {
         

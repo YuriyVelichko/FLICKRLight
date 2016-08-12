@@ -9,16 +9,17 @@
 import UIKit
 import SVProgressHUD
 
-private let reuseIdentifier = "photoCell"
-private let cellSpacing : CGFloat = CGFloat( 5 )
-
 class SearchViewController: UIViewController, UISearchBarDelegate {
+    
+    // MARK: - properties
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     var collectionController = CollectionViewController()
     
     private var lastSearchedText = ""
+    
+    // MARK: - initializer
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - UIViewController
+    // MARK: - UIViewController (proxy for internal controller)
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         
@@ -50,12 +51,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     // MARK: - UISearchBarDelegate
     
-    
     func searchBarSearchButtonClicked( theSearchBar : UISearchBar ) {
         
         theSearchBar.resignFirstResponder()
 
         let text = theSearchBar.text ?? ""
+        
         if text == lastSearchedText {
             return
         }
@@ -70,10 +71,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         collectionController.uploadInfo( collectionView )
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // MARK: - Naviagion (proxy for internal controller)
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
         
         collectionController.prepareForSegue(segue, sender: collectionView)
     }
@@ -82,7 +82,4 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         performSegueWithIdentifier( "showDetail", sender:self )
     }
-
-
-    
 }

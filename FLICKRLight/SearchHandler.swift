@@ -21,17 +21,17 @@ class SearchHandler {
     
     // MARK: - properties
     
-    private let flickrKey       = "1ad60cb73a4eba6311c161ecad292a0b"
-    private let flickrSecret    = "20b65be7d58394e9"
+    private let flickrKey           = "1ad60cb73a4eba6311c161ecad292a0b"
+    private let flickrSecret        = "20b65be7d58394e9"
     
-    private var lastLoadedData  = -1
-    private var lastPage        = 0
-    private let chunkSize       = 200
+    private var lastLoadedData      = -1
+    private var lastPage            = 0
+    private let chunkSize           = 200
 
-    private let updateImgaesBound : Int
-    private var loadingCompleete = false
-    private var updatingData    = false
-    private var updatingInfo   = false
+    private let updateImgaesBound   : Int
+    private var loadingCompleete    = false
+    private var updatingData        = false
+    private var updatingInfo        = false
     
     var imagesInfo      : [SearchResult] = []
     var searchOptions   : [String : String]
@@ -57,6 +57,7 @@ class SearchHandler {
     }
     
     // MARK - methods
+    
     func uploadInfo( completion: (NSError!) -> Void ) {
         
         if loadingCompleete || updatingInfo {
@@ -65,12 +66,10 @@ class SearchHandler {
         
         updatingInfo = true;
         
-        let fk = FlickrKit.sharedFlickrKit()
-        
         searchOptions[ "page" ] = String( lastPage + 1 )
+        // NSLog( searchOptions.description )
         
-        NSLog( searchOptions.description )
-        
+        let fk = FlickrKit.sharedFlickrKit()
         fk.call( "flickr.photos.search", args: searchOptions, maxCacheAge: FKDUMaxAgeOneHour )
         { (response, error) -> Void in
                     
@@ -82,11 +81,11 @@ class SearchHandler {
                     
                     if let page = topPhotos["page"] {
                         
-                        NSLog( "TOTAL: %@ PAGES: %ld", topPhotos["total"] as! String, topPhotos["pages"] as? Int ?? 0)
+                        // NSLog( "TOTAL: %@ PAGES: %ld", topPhotos["total"] as! String, topPhotos["pages"] as? Int ?? 0)
                         
                         let pageValue = page as! Int;
-                        
                         let pages = topPhotos["pages"] as? Int ?? 0
+                        
                         if pageValue == pages {
                             self.loadingCompleete = true
                         } else {
@@ -112,6 +111,8 @@ class SearchHandler {
                         completion( error )
                     };
                 }
+            } else {
+                completion( error )
             }
         }
     }
@@ -126,24 +127,28 @@ class SearchHandler {
         
         dispatch_async( dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 ) ) {
         
-            let maxIndex = ( self.imagesInfo.count - self.lastLoadedData > self.updateImgaesBound ) ?
-                            self.lastLoadedData + self.updateImgaesBound :
-                            self.imagesInfo.count - 1
+            // Need to upload a little bunch of photos, not all required
+            
+            let maxIndex = (    self.imagesInfo.count - self.lastLoadedData > self.updateImgaesBound ) ?
+                                self.lastLoadedData + self.updateImgaesBound :
+                                self.imagesInfo.count - 1
             
             if self.lastLoadedData < maxIndex {
                 for index in (self.lastLoadedData + 1) ... maxIndex {
                     
                     if let url = self.imagesInfo[ index ].urlCollection {
                         self.imagesInfo[ index ].dataCollection = NSData(contentsOfURL: url )
+                    } else {
+                        
+                        self.imagesInfo[ index ].dataCollection = UIImagePNGRepresentation( UIImage(named: "green-square-Retina")! )
                     }
                     
-                    NSLog( "%ld -> %ld", index, maxIndex )
+                    // NSLog( "%ld -> %ld", index, maxIndex )
                 }
                 
                 self.lastLoadedData = maxIndex
             } else {
                 // Wait until new urls will be loaded
-                NSLog( "%ld", maxIndex )
             }
             
             dispatch_async( dispatch_get_main_queue() ) {
@@ -172,6 +177,5 @@ class SearchHandler {
         
         return nil
     }
-    
 }
 
