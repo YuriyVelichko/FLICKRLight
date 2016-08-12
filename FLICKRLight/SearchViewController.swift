@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 private let reuseIdentifier = "photoCell"
 private let cellSpacing : CGFloat = CGFloat( 5 )
@@ -16,7 +17,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var collectionController = FlickrSearchCollectionViewController()
-
+    
+    private var lastSearchedText = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,21 +52,22 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked( theSearchBar : UISearchBar ) {
-        theSearchBar.resignFirstResponder()
         
-        let options = [ "text" : theSearchBar.text! ]
-        collectionController.searchResult = FlickrSearchHandler( options: options )
-        collectionController.searchResult?.uploadInfo(){ error in
-            
-            dispatch_async( dispatch_get_main_queue() ) {
-                if error != nil {
-                    NSLog( error.localizedDescription )
-                }
-                
-                self.collectionView?.reloadData()
-            }
-        }
+        theSearchBar.resignFirstResponder()
 
+        let text = theSearchBar.text ?? ""
+        if text == lastSearchedText {
+            return
+        }
+        
+        lastSearchedText = text
+        
+        SVProgressHUD.showWithStatus( "Searching..." )
+        
+        let options = [ "text" : text ]
+        
+        collectionController.searchResult = FlickrSearchHandler( options: options )
+        collectionController.uploadInfo( collectionView )
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

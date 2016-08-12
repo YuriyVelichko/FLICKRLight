@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 private let reuseIdentifier = "photoCell"
 private let cellSpacing : CGFloat = CGFloat( 5 )
@@ -159,10 +160,12 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
         searchResult?.uploadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
+                
                 if error != nil {
                     NSLog( error.localizedDescription )
                 }                
                 
+                SVProgressHUD.dismiss()
                 collectionView.reloadData()
             }
         }
@@ -174,8 +177,7 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
         
             dispatch_async( dispatch_get_main_queue() ) {
                 collectionView.reloadData()
-            }
-            
+            }            
         }
     }
     

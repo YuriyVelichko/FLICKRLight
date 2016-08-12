@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SVProgressHUD
 
 private let reuseIdentifier = "photoCell"
 private let cellSpacing : CGFloat = CGFloat( 5 )
@@ -48,10 +49,15 @@ class NearestViewController: FlickrSearchCollectionViewController, CLLocationMan
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        let lat = String( locValue.latitude )
+        let lon = String( locValue.longitude )
         
-        let options = [ "lat"       : String( locValue.latitude ),
-                        "lon"       : String( locValue.longitude ),
+        let options = [ "lat"       : lat,
+                        "lon"       : lon,
                         "radius"    : "1" ];
+        
+        SVProgressHUD.showWithStatus( String( format: "Fetching data for location [Latitude: %@ Longitude: %@]", lat, lon ) )
+
 
         searchResult = FlickrSearchHandler( options: options )
         
