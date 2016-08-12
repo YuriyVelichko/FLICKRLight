@@ -32,11 +32,11 @@ class ImagesCache {
         let URLRequest = NSURLRequest( URL: url )
         
         if let cachedImage = cache.imageForRequest( URLRequest, withAdditionalIdentifier: "image" ) {
-            NSLog( "FROM: CACHE")
+            debugPrint( "FROM: CACHE")
             completion( image: cachedImage )
         } else {
             
-            NSLog( "FROM: INET")
+            debugPrint( "FROM: INET")
             downloader.downloadImage(URLRequest: URLRequest ) { response in
                 
                 if let image = response.result.value {

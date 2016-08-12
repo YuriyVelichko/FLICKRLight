@@ -169,12 +169,12 @@ class CollectionViewController: UICollectionViewController {
             
             dispatch_async( dispatch_get_main_queue() ) {
                 
-                if error != nil {
-                    NSLog( error.localizedDescription )
-                }                
-                
                 SVProgressHUD.dismiss()
                 collectionView.reloadData()
+                
+                if error != nil {
+                    self.showAlertInMainQueue( error.localizedDescription )
+                }
             }
         }
     }
