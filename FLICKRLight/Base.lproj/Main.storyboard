@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -53,18 +54,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="UK0-My-sfJ">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="PWj-Z4-Cre"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="L0i-b8-Ac1" id="4N9-cQ-DzI"/>
-                                </connections>
-                            </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="N9V-q6-tUU">
-                                <rect key="frame" x="0.0" y="108" width="600" height="443"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Yp1-AS-KAy">
                                     <size key="itemSize" width="50" height="50"/>
@@ -74,7 +65,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="Fm3-Vy-ECj">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -90,17 +81,41 @@
                                     <outlet property="delegate" destination="L0i-b8-Ac1" id="sca-nv-6Cd"/>
                                 </connections>
                             </collectionView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="UK0-My-sfJ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="PWj-Z4-Cre"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="L0i-b8-Ac1" id="4N9-cQ-DzI"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="N9V-q6-tUU" firstAttribute="top" secondItem="UK0-My-sfJ" secondAttribute="bottom" id="IfL-al-pHZ"/>
                             <constraint firstItem="N9V-q6-tUU" firstAttribute="leading" secondItem="sTF-Ul-UlR" secondAttribute="leading" id="QF0-Dg-84P"/>
                             <constraint firstAttribute="trailing" secondItem="N9V-q6-tUU" secondAttribute="trailing" id="TCT-8p-fKa"/>
+                            <constraint firstItem="N9V-q6-tUU" firstAttribute="leading" secondItem="sTF-Ul-UlR" secondAttribute="leading" id="Wwp-He-1UE"/>
                             <constraint firstItem="UK0-My-sfJ" firstAttribute="leading" secondItem="sTF-Ul-UlR" secondAttribute="leading" id="Ybv-uZ-tdU"/>
                             <constraint firstAttribute="trailing" secondItem="UK0-My-sfJ" secondAttribute="trailing" id="ahA-x1-D1m"/>
                             <constraint firstItem="r4m-zz-WFp" firstAttribute="top" secondItem="N9V-q6-tUU" secondAttribute="bottom" id="dzv-Nq-wfy"/>
+                            <constraint firstItem="N9V-q6-tUU" firstAttribute="top" secondItem="UK0-My-sfJ" secondAttribute="bottom" id="eUO-ws-BTt"/>
+                            <constraint firstAttribute="bottom" secondItem="N9V-q6-tUU" secondAttribute="bottom" id="ja7-yT-UfJ"/>
                             <constraint firstItem="UK0-My-sfJ" firstAttribute="top" secondItem="adc-cO-a0z" secondAttribute="bottom" id="kZP-pi-XdH"/>
+                            <constraint firstAttribute="trailing" secondItem="N9V-q6-tUU" secondAttribute="trailing" id="lGm-Ln-fVI"/>
+                            <constraint firstItem="N9V-q6-tUU" firstAttribute="top" secondItem="sTF-Ul-UlR" secondAttribute="topMargin" id="y0k-vf-WWF"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="IfL-al-pHZ"/>
+                                <exclude reference="QF0-Dg-84P"/>
+                                <exclude reference="TCT-8p-fKa"/>
+                                <exclude reference="eUO-ws-BTt"/>
+                                <exclude reference="dzv-Nq-wfy"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="0fl-sL-Hrd"/>
                     <connections>
