@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -17,15 +18,29 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     private var rotation            = CGFloat(0)
     private var previousRotation    = CGFloat(0)
     
-    var data : NSData?
+    var url : NSURL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        if let internalData = data {
-            imageView.image = UIImage( data: internalData )
+        if let dataURL = self.url {
+            
+            SVProgressHUD.showWithStatus( "Fetching Image..." )
+            NSLog( "%@", dataURL.absoluteString )
+            
+            dispatch_async( dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 ) ) {
+                if let data = NSData( contentsOfURL:dataURL ) {
+                    
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        SVProgressHUD.dismiss()
+                        self.imageView.image = UIImage( data: data )
+                    }
+                }
+            }
+        } else {
+            
         }
         
         imageView.userInteractionEnabled = true

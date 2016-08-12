@@ -90,7 +90,7 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
             let collectionView = sender as? UICollectionView {
             
             if let indexPath = collectionView.indexPathsForSelectedItems()?.first{
-                detailView.data = searchResult?.dataAtIndex(indexPath.row) ?? NSData()
+                detailView.url = searchResult?.imagesInfo[indexPath.row].urlOrigin
             }
         }
     }
