@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>AlamofireImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FlickrKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2C55DDC22D2F33C1F74173B23D2C5D6A</key>
+		<key>05094CC4A047119F7ADC14EE74C4881C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3F4EB76E9D7129FBF582CC4AE3C6B3DF</key>
+		<key>0D73369578F46533F41B51DBE23B8557</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>71498807FD5C9BA6FA8BD25795D84DA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F779C9CD6B65795BA8B74F8BFD276397</key>
 		<dict>
 			<key>primary</key>
 			<true/>
