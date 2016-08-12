@@ -15,7 +15,9 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
 
     var searchResult : FlickrSearchHandler?
     
-    weak var topCotroller : SearchViewController?
+    weak var topController : SearchViewController?
+    
+    private var visibleCells : [NSIndexPath] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +38,24 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
     override func collectionView(   collectionView: UICollectionView,
                                     didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let ctr = topCotroller {
+        if let ctr = topController {
             ctr.performSegue()
         } else {
             performSegueWithIdentifier( "showDetail", sender:collectionView )
+        }
+    }
+    
+    // MARK: - UIViewController
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        visibleCells = managedCollectionView()?.indexPathsForVisibleItems() ?? []
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        
+        if !visibleCells.isEmpty {
+            managedCollectionView()?.scrollToItemAtIndexPath( visibleCells[0], atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
         }
     }
     
@@ -48,8 +64,8 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
     override func scrollViewDidScroll( scrollView : UIScrollView) {
         
         if  let collectionView = scrollView as? UICollectionView,
-            let lastVisiableCell = collectionView.visibleCells().last {
-            let indexPath = collectionView.indexPathForCell( lastVisiableCell )
+            let lastVisibleCell = collectionView.visibleCells().last {
+            let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
             if searchResult?.needUploadInfo( (indexPath?.row)! ) ?? false {
                 uploadInfo( collectionView )
@@ -60,6 +76,7 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
             }            
         }
     }
+    
 
     // MARK: - Navigation
 
@@ -160,5 +177,18 @@ class FlickrSearchCollectionViewController: UICollectionViewController {
             }
             
         }
+    }
+    
+    private func managedCollectionView() -> UICollectionView? {
+        
+        var res : UICollectionView?
+        
+        if let topCtr = topController{
+            res = topCtr.collectionView
+        } else {
+            res = collectionView
+        }
+        
+        return res
     }
 }

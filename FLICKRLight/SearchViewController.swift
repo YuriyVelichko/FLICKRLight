@@ -21,7 +21,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionController.topCotroller = self
+        collectionController.topController = self
         
         collectionView.delegate = collectionController
         collectionView.dataSource = collectionController
@@ -34,6 +34,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - UIViewController
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        collectionController.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        
+        collectionController.didRotateFromInterfaceOrientation(fromInterfaceOrientation)
+    }
     
     // MARK: - UISearchBarDelegate
     
