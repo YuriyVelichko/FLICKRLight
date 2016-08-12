@@ -58,7 +58,7 @@ class SearchHandler {
     
     // MARK - methods
     
-    func uploadInfo( completion: (NSError!) -> Void ) {
+    func downloadInfo( completion: (NSError!) -> Void ) {
         
         if loadingComplete || updatingInfo {
             return
@@ -107,7 +107,7 @@ class SearchHandler {
                         self.updatingInfo = false
                     }
                     
-                    self.uploadData(){
+                    self.downloadData(){
                         completion( error )
                     };
                 }
@@ -117,7 +117,7 @@ class SearchHandler {
         }
     }
     
-    func uploadData( completion: (() -> Void)? ) {
+    func downloadData( completion: (() -> Void)? ) {
         
         if updatingData {
             return
@@ -161,11 +161,11 @@ class SearchHandler {
         }
     }
     
-    func needUploadData( currentIndex : Int ) -> Bool {
+    func needdownloadData( currentIndex : Int ) -> Bool {
         return !updatingData && lastLoadedData - currentIndex < updateImagesBound
     }
     
-    func needUploadInfo( currentIndex : Int ) -> Bool {
+    func needdownloadInfo( currentIndex : Int ) -> Bool {
         
         return !loadingComplete && imagesInfo.count - currentIndex < ( chunkSize / 2 )
     }

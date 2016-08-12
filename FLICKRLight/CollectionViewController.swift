@@ -68,11 +68,11 @@ class CollectionViewController: UICollectionViewController {
             
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
-            if searchResult?.needUploadInfo( (indexPath?.row)! ) ?? false {
-                uploadInfo( collectionView )
+            if searchResult?.needdownloadInfo( (indexPath?.row)! ) ?? false {
+                downloadInfo( collectionView )
             } else {
-                if searchResult?.needUploadData((indexPath?.row)!) ?? false {
-                    uploadData( collectionView )
+                if searchResult?.needdownloadData((indexPath?.row)!) ?? false {
+                    downloadData( collectionView )
                 }
             }            
         }
@@ -156,8 +156,8 @@ class CollectionViewController: UICollectionViewController {
                                        forCellWithReuseIdentifier: reuseIdentifier)
     }
     
-    func uploadInfo( collectionView : UICollectionView ){
-        searchResult?.uploadInfo() { error in
+    func downloadInfo( collectionView : UICollectionView ){
+        searchResult?.downloadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
                 
@@ -171,9 +171,9 @@ class CollectionViewController: UICollectionViewController {
         }
     }
     
-    func uploadData( collectionView : UICollectionView ){
+    func downloadData( collectionView : UICollectionView ){
         
-        self.searchResult?.uploadData() {
+        self.searchResult?.downloadData() {
         
             dispatch_async( dispatch_get_main_queue() ) {
                 collectionView.reloadData()

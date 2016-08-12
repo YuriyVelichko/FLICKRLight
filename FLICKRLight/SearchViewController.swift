@@ -62,7 +62,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let options = [ "text" : text ]
         
         collectionController.searchResult = SearchHandler( options: options )
-        collectionController.uploadInfo( collectionView )
+        collectionController.downloadInfo( collectionView )
     }
     
     // MARK: - Naviagion (proxy for internal controller)
