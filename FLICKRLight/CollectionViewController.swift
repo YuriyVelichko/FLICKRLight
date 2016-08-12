@@ -16,11 +16,16 @@ class CollectionViewController: UICollectionViewController {
     
     // MARK: - properties
 
-    var searchResult            : SearchHandler?
+    var searchResult            : SearchHandler? {
+        didSet {
+            imagesCache.clearCache()
+        }
+    }
+    
     weak var topController      : SearchViewController?
     private var visibleCells    : [NSIndexPath] = []
     
-    let imagesCache             = ImagesCache()
+    private let imagesCache     = ImagesCache()
 
     
     // MARK: - UIView

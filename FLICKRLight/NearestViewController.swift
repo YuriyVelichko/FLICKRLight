@@ -58,7 +58,6 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
         }
 
         searchResult = SearchHandler( options: options )
-        imagesCache.clearCache()
         
         dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
                         Int64(1.5 * Double(NSEC_PER_SEC))),
