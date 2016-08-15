@@ -28,9 +28,11 @@ class CollectionViewCell: UICollectionViewCell {
         
         super.init(frame: frame)
         imageView = UIImageView(frame: self.contentView.bounds)
-        imageView.opaque = false
+        imageView.contentMode = .ScaleAspectFill
         
         contentView.addSubview(imageView)
+        
+        clipsToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
