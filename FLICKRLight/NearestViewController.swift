@@ -46,15 +46,15 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        let lat = String( locValue.latitude )
-        let lon = String( locValue.longitude )
         
-        let options = [ "lat"       : lat,
-                        "lon"       : lon,
+        let options = [ "lat"       : String( locValue.latitude ),
+                        "lon"       : String( locValue.longitude ),
                         "radius"    : "1" ];
         
+        let coordinates = "Latitude: \(String( format: "%.2f", locValue.latitude )) Latitude: \(String( format: "%.2f", locValue.longitude ))"
+        
         if self.navigationController?.tabBarController?.selectedIndex == 0 {
-            SVProgressHUD.showWithStatus( String( format: "Fetching data for location [Latitude: %@ Longitude: %@]", lat, lon ) )
+            SVProgressHUD.showWithStatus( "Fetching data for location [\(coordinates)]" )
         }
 
         searchResult = SearchHandler( options: options )
@@ -63,6 +63,7 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
                         Int64(1.5 * Double(NSEC_PER_SEC))),
                         dispatch_get_main_queue()) {
                             
+            self.navigationItem.title = coordinates
             self.downloadInfo( self.collectionView! )
         }
     }

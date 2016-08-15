@@ -159,6 +159,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="ojc-of-tXC"/>
+                    <connections>
+                        <outlet property="navigationItem" destination="ojc-of-tXC" id="wyl-NG-jID"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B2W-AK-GUf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -214,6 +217,6 @@
         <image name="search" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rC2-Qr-E17"/>
+        <segue reference="6Qg-ae-jHt"/>
     </inferredMetricsTieBreakers>
 </document>
