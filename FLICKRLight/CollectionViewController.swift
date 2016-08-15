@@ -16,16 +16,16 @@ class CollectionViewController: UICollectionViewController {
     
     // MARK: - properties
 
-    var searchResult            : SearchHandler? {
+    var photoLoader            : PhotoLoader? {
         didSet {
-            imagesCache.clearCache()
+            photoCache.clearCache()
         }
     }
     
     weak var topController      : SearchViewController?
     private var visibleCells    : [NSIndexPath] = []
     
-    private let imagesCache     = ImagesCache()
+    private let photoCache     = PhotoCache()
 
     
     // MARK: - UIView
@@ -73,7 +73,7 @@ class CollectionViewController: UICollectionViewController {
             
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
-            if searchResult?.needdownloadInfo( (indexPath?.row)! ) ?? false {
+            if photoLoader?.needdownloadInfo( (indexPath?.row)! ) ?? false {
                 downloadInfo( collectionView )
             }
         }
@@ -89,10 +89,10 @@ class CollectionViewController: UICollectionViewController {
             if let indexPath = collectionView.indexPathsForSelectedItems()?.first{
                 
                 if detailView.cache == nil {
-                    detailView.cache = imagesCache
+                    detailView.cache = photoCache
                 }
                 
-                detailView.url = searchResult?.photosInfo[indexPath.row].urlOrigin
+                detailView.url = photoLoader?.photosInfo[indexPath.row].urlOrigin
             }
         }
     }
@@ -106,7 +106,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return searchResult?.photosInfo.count ?? 0
+        return photoLoader?.photosInfo.count ?? 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -116,10 +116,10 @@ class CollectionViewController: UICollectionViewController {
         // Configure the cell
         
         if cell.cache == nil {
-            cell.cache = imagesCache
+            cell.cache = photoCache
         }
         
-        cell.url = searchResult?.photosInfo[ indexPath.row ].urlCollection
+        cell.url = photoLoader?.photosInfo[ indexPath.row ].urlCollection
 
         return cell
     }
@@ -165,7 +165,7 @@ class CollectionViewController: UICollectionViewController {
     }
     
     func downloadInfo( collectionView : UICollectionView ){
-        searchResult?.downloadInfo() { error in
+        photoLoader?.downloadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
                 

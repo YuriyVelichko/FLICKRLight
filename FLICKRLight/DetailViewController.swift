@@ -15,7 +15,7 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    weak var cache  : ImagesCache?
+    weak var cache  : PhotoCache?
     var url         : NSURL?
     
     // transform properties

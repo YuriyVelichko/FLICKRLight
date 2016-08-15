@@ -11,7 +11,7 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell {
     
     var imageView   : UIImageView!
-    weak var cache  : ImagesCache?
+    weak var cache  : PhotoCache?
 
     var url: NSURL? {
         

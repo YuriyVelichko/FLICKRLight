@@ -57,7 +57,7 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
             SVProgressHUD.showWithStatus( "Fetching data for location [\(coordinates)]" )
         }
 
-        searchResult = SearchHandler( options: options )
+        photoLoader = PhotoLoader( options: options )
         
         dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
                         Int64(1.5 * Double(NSEC_PER_SEC))),

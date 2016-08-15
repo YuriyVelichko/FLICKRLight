@@ -1,5 +1,5 @@
 //
-//  FlickrSearchHandler.swift
+//  PhotoLoader.swift
 //  FLICKRLight
 //
 //  Created by Yuriy Velichko on 8/10/16.
@@ -9,7 +9,7 @@
 import Foundation
 import FlickrKit
 
-class SearchHandler {
+class PhotoLoader {
     
     // MARK: - properties
     

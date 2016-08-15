@@ -1,5 +1,5 @@
 //
-//  ImagesCache.swift
+//  PhotoCache.swift
 //  FLICKRLight
 //
 //  Created by Yuriy Velichko on 8/12/16.
@@ -9,7 +9,7 @@
 import Foundation
 import AlamofireImage
 
-class ImagesCache {
+class PhotoCache {
     
     private let downloader  = ImageDownloader()
     private let cache       : AutoPurgingImageCache
