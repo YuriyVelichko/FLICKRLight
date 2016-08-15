@@ -16,7 +16,7 @@ class CollectionViewController: UICollectionViewController {
     
     // MARK: - properties
 
-    var photoLoader            : PhotoLoader? {
+    var photoListLoader : PhotoListLoader? {
         didSet {
             photoCache.clearCache()
         }
@@ -73,7 +73,7 @@ class CollectionViewController: UICollectionViewController {
             
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
-            if photoLoader?.needDownloadInfo( (indexPath?.row)! ) ?? false {
+            if photoListLoader?.needDownloadInfo( (indexPath?.row)! ) ?? false {
                 downloadInfo( collectionView )
             }
         }
@@ -92,7 +92,7 @@ class CollectionViewController: UICollectionViewController {
                     detailView.cache = photoCache
                 }
                 
-                detailView.url = photoLoader?.photosInfo[indexPath.row].urlOrigin
+                detailView.url = photoListLoader?.photosInfo[indexPath.row].urlOrigin
             }
         }
     }
@@ -106,7 +106,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return photoLoader?.photosInfo.count ?? 0
+        return photoListLoader?.photosInfo.count ?? 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -119,7 +119,7 @@ class CollectionViewController: UICollectionViewController {
             cell.cache = photoCache
         }
         
-        cell.url = photoLoader?.photosInfo[ indexPath.row ].urlCollection
+        cell.url = photoListLoader?.photosInfo[ indexPath.row ].urlCollection
 
         return cell
     }
@@ -165,7 +165,7 @@ class CollectionViewController: UICollectionViewController {
     }
     
     func downloadInfo( collectionView : UICollectionView ){
-        photoLoader?.downloadInfo() { error in
+        photoListLoader?.downloadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
                 

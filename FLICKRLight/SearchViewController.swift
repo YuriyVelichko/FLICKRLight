@@ -61,7 +61,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         let options = [ "text" : text ]
         
-        collectionController.photoLoader = PhotoLoader( options: options )
+        collectionController.photoListLoader = PhotoListLoader( options: options )
         
         dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
             Int64(1.5 * Double(NSEC_PER_SEC))),

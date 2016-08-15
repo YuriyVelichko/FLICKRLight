@@ -9,7 +9,7 @@
 import Foundation
 import FlickrKit
 
-class PhotoLoader {
+class PhotoListLoader {
     
     private struct State : OptionSetType {
         let rawValue: Int
