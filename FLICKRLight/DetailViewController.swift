@@ -33,11 +33,8 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
             
             SVProgressHUD.showWithStatus( "Fetching Image..." )
             
-            cache?.updateImage( dataURL ) { image in
-                dispatch_async( dispatch_get_main_queue() ) {
-                    self.imageView.image = image
-                    SVProgressHUD.dismiss()
-                }
+            cache?.updateImage( dataURL ) {
+                self.imageView.image = self.cache?.photoForURL(dataURL)
             }
         } else {
             showAlertInMainQueue( "There datasource URL is empty" )

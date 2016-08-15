@@ -22,9 +22,10 @@ class CollectionViewController: UICollectionViewController {
         }
     }
     
-    private var visibleCells    : [NSIndexPath] = []
+    private var visibleCells            : [NSIndexPath] = []
+    private var previousVisibleCells    : [NSIndexPath] = []
     
-    private let photoCache     = PhotoCache()
+    private let photoCache      = PhotoCache()
 
     
     // MARK: - UIView
@@ -64,7 +65,7 @@ class CollectionViewController: UICollectionViewController {
     
     override func scrollViewDidScroll( scrollView : UIScrollView) {
         
-        if  let collectionView = scrollView as? UICollectionView,
+        if  let collectionView  = scrollView as? UICollectionView,
             let lastVisibleCell = collectionView.visibleCells().last {
             
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
@@ -72,6 +73,15 @@ class CollectionViewController: UICollectionViewController {
             if photoListLoader?.needDownloadInfo( (indexPath?.row)! ) ?? false {
                 downloadInfo()
             }
+            
+            let visibleCells = collectionView.indexPathsForVisibleItems()
+            for indexPath in previousVisibleCells {
+                if !visibleCells.contains( indexPath ) {
+                    photoCache.cancelUpdate( photoListLoader?.photosInfo[ indexPath.row ].urlCollection ?? NSURL() )
+                }
+            }
+            
+            previousVisibleCells = visibleCells
         }
     }
 
@@ -111,11 +121,26 @@ class CollectionViewController: UICollectionViewController {
     
         // Configure the cell
         
-        if cell.cache == nil {
-            cell.cache = photoCache
+        if let url = photoListLoader?.photosInfo[ indexPath.row ].urlCollection {
+            
+            let setImage = { (image: UIImage, contentMode: UIViewContentMode) -> Void in
+                cell.imageView.contentMode = contentMode
+                cell.imageView.image = image
+            }
+            
+            if let cachedImage = photoCache.photoForURL( url ) {
+                setImage( cachedImage, .ScaleAspectFill )
+            } else {
+                
+                if let placeholder = UIImage( named: "reload_placeholder_24" ) {
+                    setImage( placeholder, .Center )
+                }
+                
+                photoCache.updateImage( url ) {
+                    self.collectionView?.reloadData()
+                }
+            }
         }
-        
-        cell.url = photoListLoader?.photosInfo[ indexPath.row ].urlCollection
 
         return cell
     }

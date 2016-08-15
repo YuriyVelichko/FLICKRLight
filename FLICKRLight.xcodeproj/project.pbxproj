@@ -13,13 +13,14 @@
 		DE2DD1351D5B0C1C00875DD5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */; };
 		DE2DD1371D5B274D00875DD5 /* PhotoListLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1361D5B274D00875DD5 /* PhotoListLoader.swift */; };
 		DE2DD1391D5B447200875DD5 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */; };
-		DE3A89111D5E03200094B306 /* PhotoCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A89101D5E03200094B306 /* PhotoCache.swift */; };
 		DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */; };
 		DE3EF1111D5AFE300002DD76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF10F1D5AFE300002DD76 /* Main.storyboard */; };
 		DE3EF1131D5AFE300002DD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1121D5AFE300002DD76 /* Assets.xcassets */; };
 		DE3EF1161D5AFE300002DD76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1141D5AFE300002DD76 /* LaunchScreen.storyboard */; };
 		DE3F8D3F1D5C75DA00A344CA /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3F8D3E1D5C75DA00A344CA /* CollectionViewController.swift */; };
 		DE5BC71D1D61AD270087203E /* PhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BC71C1D61AD270087203E /* PhotoInfo.swift */; };
+		DE5BC7231D6210720087203E /* DownloadPhotoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BC7211D6210720087203E /* DownloadPhotoOperation.swift */; };
+		DE5BC7241D6210720087203E /* PhotoCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BC7221D6210720087203E /* PhotoCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +30,6 @@
 		DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE2DD1361D5B274D00875DD5 /* PhotoListLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoListLoader.swift; sourceTree = "<group>"; };
 		DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		DE3A89101D5E03200094B306 /* PhotoCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCache.swift; sourceTree = "<group>"; };
 		DE3EF1061D5AFE300002DD76 /* FLICKRLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FLICKRLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3EF1091D5AFE300002DD76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE3EF1101D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,6 +38,8 @@
 		DE3EF1171D5AFE300002DD76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE3F8D3E1D5C75DA00A344CA /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		DE5BC71C1D61AD270087203E /* PhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoInfo.swift; sourceTree = "<group>"; };
+		DE5BC7211D6210720087203E /* DownloadPhotoOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPhotoOperation.swift; sourceTree = "<group>"; };
+		DE5BC7221D6210720087203E /* PhotoCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCache.swift; sourceTree = "<group>"; };
 		EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FLICKRLight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLICKRLight.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,8 +99,9 @@
 				DE2DD1381D5B447200875DD5 /* CollectionViewCell.swift */,
 				DE3F8D3E1D5C75DA00A344CA /* CollectionViewController.swift */,
 				DE2DD1341D5B0C1C00875DD5 /* DetailViewController.swift */,
+				DE5BC7211D6210720087203E /* DownloadPhotoOperation.swift */,
 				DE2DD1301D5B0B6100875DD5 /* NearestViewController.swift */,
-				DE3A89101D5E03200094B306 /* PhotoCache.swift */,
+				DE5BC7221D6210720087203E /* PhotoCache.swift */,
 				DE5BC71C1D61AD270087203E /* PhotoInfo.swift */,
 				DE2DD1361D5B274D00875DD5 /* PhotoListLoader.swift */,
 				DE2DD1321D5B0B9600875DD5 /* SearchViewController.swift */,
@@ -233,12 +236,13 @@
 			files = (
 				DE5BC71D1D61AD270087203E /* PhotoInfo.swift in Sources */,
 				DE2DD1331D5B0B9600875DD5 /* SearchViewController.swift in Sources */,
+				DE5BC7231D6210720087203E /* DownloadPhotoOperation.swift in Sources */,
 				DE3F8D3F1D5C75DA00A344CA /* CollectionViewController.swift in Sources */,
 				DE3EF10A1D5AFE300002DD76 /* AppDelegate.swift in Sources */,
 				DE2DD1391D5B447200875DD5 /* CollectionViewCell.swift in Sources */,
 				DE2DD1371D5B274D00875DD5 /* PhotoListLoader.swift in Sources */,
+				DE5BC7241D6210720087203E /* PhotoCache.swift in Sources */,
 				DE2DD1311D5B0B6100875DD5 /* NearestViewController.swift in Sources */,
-				DE3A89111D5E03200094B306 /* PhotoCache.swift in Sources */,
 				DE2DD1351D5B0C1C00875DD5 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
