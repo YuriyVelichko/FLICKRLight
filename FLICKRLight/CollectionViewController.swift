@@ -22,7 +22,6 @@ class CollectionViewController: UICollectionViewController {
         }
     }
     
-    weak var topController      : SearchViewController?
     private var visibleCells    : [NSIndexPath] = []
     
     private let photoCache     = PhotoCache()
@@ -44,12 +43,12 @@ class CollectionViewController: UICollectionViewController {
     {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
-        visibleCells = managedCollectionView()?.indexPathsForVisibleItems() ?? []
+        visibleCells = collectionView?.indexPathsForVisibleItems() ?? []
         
         coordinator.animateAlongsideTransition(nil) { _ in
             
             if !self.visibleCells.isEmpty {
-                self.managedCollectionView()?.scrollToItemAtIndexPath( self.visibleCells[0], atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
+                self.collectionView?.scrollToItemAtIndexPath( self.visibleCells[0], atScrollPosition: UICollectionViewScrollPosition.Top, animated: false)
             }
         }
     }
@@ -57,11 +56,7 @@ class CollectionViewController: UICollectionViewController {
     override func collectionView(   collectionView: UICollectionView,
                                     didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let ctr = topController {
-            ctr.performSegue()
-        } else {
-            performSegueWithIdentifier( "showDetail", sender:collectionView )
-        }
+        performSegueWithIdentifier( "showDetail", sender:collectionView )
     }
     
     // MARK: - UIScrollViewDelegate
@@ -177,20 +172,5 @@ class CollectionViewController: UICollectionViewController {
                 }
             }
         }
-    }
-    
-    // MARK: - internal methods
-    
-    private func managedCollectionView() -> UICollectionView? {
-        
-        var res : UICollectionView?
-        
-        if let topCtr = topController{
-            res = topCtr.collectionView
-        } else {
-            res = collectionView
-        }
-        
-        return res
     }
 }

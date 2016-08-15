@@ -9,13 +9,9 @@
 import UIKit
 import SVProgressHUD
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: CollectionViewController, UISearchBarDelegate {
     
     // MARK: - properties
-
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    var collectionController    = CollectionViewController()
     
     private var lastSearchedText = ""
     
@@ -24,25 +20,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionController.topController = self
-        
-        collectionView.delegate = collectionController
-        collectionView.dataSource = collectionController
-        
-        collectionController.collectionView = collectionView
-        
         CollectionViewController.registerCell( collectionView )
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - UIViewController (proxy for internal controller)
-    
-    override func viewWillTransitionToSize( size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        collectionController.viewWillTransitionToSize( size, withTransitionCoordinator: coordinator )
     }
     
     // MARK: - UISearchBarDelegate
@@ -63,25 +46,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         let options = [ "text" : text ]
         
-        collectionController.photoListLoader = PhotoListLoader( options: options )
+        photoListLoader = PhotoListLoader( options: options )
         
         dispatch_after( dispatch_time(DISPATCH_TIME_NOW,
             Int64(1.5 * Double(NSEC_PER_SEC))),
                         dispatch_get_main_queue()) {
                             
-            self.collectionController.downloadInfo()
+            self.downloadInfo()
         }        
-    }
-    
-    // MARK: - Naviagion (proxy for internal controller)
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        collectionController.prepareForSegue(segue, sender: collectionView)
-    }
-    
-    func performSegue() {
-        
-        performSegueWithIdentifier( "showDetail", sender:self )
     }
 }

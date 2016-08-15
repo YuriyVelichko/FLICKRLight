@@ -34,79 +34,51 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="L0i-b8-Ac1" kind="relationship" relationship="rootViewController" id="lZV-47-H6G"/>
+                        <segue destination="tvz-Ta-ZaJ" kind="relationship" relationship="rootViewController" id="iq8-nq-gYB"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdH-Uv-e8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="882" y="519"/>
         </scene>
-        <!--Search View Controller-->
-        <scene sceneID="C6A-PC-NDW">
+        <!--Collection View Controller-->
+        <scene sceneID="SLU-Ll-uAw">
             <objects>
-                <viewController id="L0i-b8-Ac1" customClass="SearchViewController" customModule="FLICKRLight" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="adc-cO-a0z"/>
-                        <viewControllerLayoutGuide type="bottom" id="r4m-zz-WFp"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="sTF-Ul-UlR">
+                <collectionViewController id="tvz-Ta-ZaJ" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LQW-15-EnE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <searchBar contentMode="redraw" placeholder="Put the search request" translatesAutoresizingMaskIntoConstraints="NO" id="UK0-My-sfJ">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="PWj-Z4-Cre"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="L0i-b8-Ac1" id="4N9-cQ-DzI"/>
-                                </connections>
-                            </searchBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ubq-X4-ejx">
-                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dLE-33-d0u">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="pVn-bD-G3z">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <connections>
-                                            <segue destination="7Nf-9T-7BU" kind="show" identifier="showDetail" id="rC2-Qr-E17"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Ubq-X4-ejx" firstAttribute="leading" secondItem="sTF-Ul-UlR" secondAttribute="leading" id="9ec-8v-mlf"/>
-                            <constraint firstAttribute="bottom" secondItem="Ubq-X4-ejx" secondAttribute="bottom" id="Mzl-ca-Hbb"/>
-                            <constraint firstItem="UK0-My-sfJ" firstAttribute="leading" secondItem="sTF-Ul-UlR" secondAttribute="leading" id="Ybv-uZ-tdU"/>
-                            <constraint firstAttribute="trailing" secondItem="UK0-My-sfJ" secondAttribute="trailing" id="ahA-x1-D1m"/>
-                            <constraint firstAttribute="trailing" secondItem="Ubq-X4-ejx" secondAttribute="trailing" id="i7M-GE-X55"/>
-                            <constraint firstItem="UK0-My-sfJ" firstAttribute="top" secondItem="adc-cO-a0z" secondAttribute="bottom" id="kZP-pi-XdH"/>
-                            <constraint firstItem="Ubq-X4-ejx" firstAttribute="top" secondItem="UK0-My-sfJ" secondAttribute="bottom" id="lJ6-tC-f9L"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="0fl-sL-Hrd"/>
-                    <connections>
-                        <outlet property="collectionView" destination="Ubq-X4-ejx" id="7MB-tn-qPe"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="J79-Yl-UbR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pic-Ya-nhb">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="Hre-NQ-uw4" customClass="CollectionViewCell" customModule="FLICKRLight" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="7Nf-9T-7BU" kind="show" identifier="showDetail" id="i9i-Jb-cam"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="tvz-Ta-ZaJ" id="Xgd-V2-MUA"/>
+                            <outlet property="delegate" destination="tvz-Ta-ZaJ" id="3eL-cI-bDi"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="fJZ-Pu-SEN"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xrM-jO-4mC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1766" y="519"/>
+            <point key="canvasLocation" x="1742" y="519"/>
         </scene>
         <!--Nearest-->
         <scene sceneID="AC5-IQ-QZv">
@@ -217,6 +189,6 @@
         <image name="search" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Qg-ae-jHt"/>
+        <segue reference="i9i-Jb-cam"/>
     </inferredMetricsTieBreakers>
 </document>
