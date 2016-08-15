@@ -13,7 +13,11 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
     
     // MARK: - properties
     
-    private var lastSearchedText = ""
+    private var searchBarActive     : Bool = false
+    private var searchBarBoundsY    : CGFloat?
+    private var searchBar           : UISearchBar?
+    
+    private var lastSearchedText    = ""
     
     // MARK: - initializer
     
@@ -21,6 +25,13 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         CollectionViewController.registerCell( collectionView )
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        addSearchBar()
+        navigationItem.titleView = searchBar
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,5 +65,20 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
                             
             self.downloadInfo()
         }        
+    }
+    
+    // MARK: - internal methods
+    
+    private func addSearchBar(){
+        if self.searchBar == nil{
+            
+            self.searchBar = UISearchBar()
+            self.searchBar!.sizeToFit()
+            self.searchBar!.searchBarStyle       = UISearchBarStyle.Minimal
+            self.searchBar!.tintColor            = UIColor.whiteColor()
+            self.searchBar!.barTintColor         = UIColor.whiteColor()
+            self.searchBar!.delegate             = self;
+            self.searchBar!.placeholder          = "Type text to start searching";
+        }
     }
 }

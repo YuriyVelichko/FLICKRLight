@@ -41,10 +41,10 @@
             </objects>
             <point key="canvasLocation" x="882" y="519"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="SLU-Ll-uAw">
             <objects>
-                <collectionViewController id="tvz-Ta-ZaJ" sceneMemberID="viewController">
+                <collectionViewController id="tvz-Ta-ZaJ" customClass="SearchViewController" customModule="FLICKRLight" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LQW-15-EnE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
