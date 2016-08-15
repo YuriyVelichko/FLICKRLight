@@ -56,7 +56,7 @@ class SearchHandler {
         updatingInfo = true;
         
         searchOptions[ "page" ] = String( lastPage + 1 )
-        // debugPrint( searchOptions.description )
+        debugPrint( searchOptions.description )
         
         let fk = FlickrKit.sharedFlickrKit()
         fk.call( "flickr.photos.search", args: searchOptions, maxCacheAge: FKDUMaxAgeOneHour )
@@ -70,8 +70,8 @@ class SearchHandler {
                     
                     if let page = topPhotos["page"] {
                         
-                        // debugPrint( "TOTAL: %@ PAGES: %ld", topPhotos["total"] as! String, topPhotos["pages"] as? Int ?? 0)
-                        
+                        debugPrint( "TOTAL: \(topPhotos["total"] as! String) PAGES: \( topPhotos["pages"] as? Int ?? 0 )")
+
                         let pageValue = page as! Int;
                         let pages = topPhotos["pages"] as? Int ?? 0
                         

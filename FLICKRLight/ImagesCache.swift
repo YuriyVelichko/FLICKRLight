@@ -31,7 +31,7 @@ class ImagesCache {
     {
         let URLRequest = NSURLRequest( URL: url )
         
-        if let cachedImage = cache.imageForRequest( URLRequest, withAdditionalIdentifier: "image" ) {
+        if let cachedImage = imageForURL( url ) {
             debugPrint( "FROM: CACHE")
             completion( image: cachedImage )
         } else {
@@ -51,6 +51,12 @@ class ImagesCache {
                 }
             }
         }
+    }
+    
+    func imageForURL( url: NSURL ) -> UIImage? {
+        
+        let URLRequest = NSURLRequest( URL: url )
+        return cache.imageForRequest( URLRequest, withAdditionalIdentifier: "image" )
     }
     
     func clearCache() {

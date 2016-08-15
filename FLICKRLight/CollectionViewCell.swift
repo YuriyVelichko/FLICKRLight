@@ -16,9 +16,21 @@ class CollectionViewCell: UICollectionViewCell {
     var url: NSURL? {
         
         didSet {
-            cache?.updateImage( url! ) { image in
-                dispatch_async( dispatch_get_main_queue() ) {
-                    self.imageView.image = image
+            
+            if let cachedImage = cache?.imageForURL( url! ) {
+                setImage( cachedImage, contentMode: .ScaleAspectFill )
+            } else {
+                
+                if let placeholder = UIImage( named: "reload_placeholder_24" ) {
+                    setImage( placeholder, contentMode: .Center )
+                }
+            
+                cache?.updateImage( url! ) { image in
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        if let readyImage = image  {
+                            self.setImage( readyImage, contentMode: .ScaleAspectFill )
+                        }
+                    }
                 }
             }
         }
@@ -28,7 +40,6 @@ class CollectionViewCell: UICollectionViewCell {
         
         super.init(frame: frame)
         imageView = UIImageView(frame: self.contentView.bounds)
-        imageView.contentMode = .ScaleAspectFill
         
         contentView.addSubview(imageView)
         
@@ -40,5 +51,11 @@ class CollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - internal methods
+    
+    private func setImage( image: UIImage, contentMode: UIViewContentMode ){
+        self.imageView.contentMode = contentMode
+        self.imageView.image = image
+    }
+    
 
 }
