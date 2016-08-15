@@ -13,7 +13,7 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
     
     // MARK: - properties
     
-    private var searchBar           : UISearchBar?    
+    private var searchBar           : UISearchBar?
     private var lastSearchedText    = ""
     
     // MARK: - initializer
@@ -61,15 +61,15 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
     // MARK: - internal methods
     
     private func addSearchBar(){
-        if self.searchBar == nil{
+        if searchBar == nil{
             
-            self.searchBar = UISearchBar()
-            self.searchBar!.sizeToFit()
-            self.searchBar!.searchBarStyle       = UISearchBarStyle.Minimal
-            self.searchBar!.tintColor            = UIColor.whiteColor()
-            self.searchBar!.barTintColor         = UIColor.whiteColor()
-            self.searchBar!.delegate             = self;
-            self.searchBar!.placeholder          = "Type text to start searching";
+            searchBar = UISearchBar()
+            searchBar!.sizeToFit()
+            searchBar!.searchBarStyle       = UISearchBarStyle.Minimal
+            searchBar!.tintColor            = UIColor.whiteColor()
+            searchBar!.barTintColor         = UIColor.whiteColor()
+            searchBar!.delegate             = self;
+            searchBar!.placeholder          = "Type text to start searching";
         }
     }
 }
