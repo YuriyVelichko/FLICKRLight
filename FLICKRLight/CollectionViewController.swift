@@ -74,7 +74,7 @@ class CollectionViewController: UICollectionViewController {
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
             if photoListLoader?.needDownloadInfo( (indexPath?.row)! ) ?? false {
-                downloadInfo( collectionView )
+                downloadInfo()
             }
         }
     }
@@ -164,13 +164,13 @@ class CollectionViewController: UICollectionViewController {
                                        forCellWithReuseIdentifier: reuseIdentifier)
     }
     
-    func downloadInfo( collectionView : UICollectionView ){
+    func downloadInfo(){
         photoListLoader?.downloadInfo() { error in
             
             dispatch_async( dispatch_get_main_queue() ) {
                 
                 SVProgressHUD.dismiss()
-                collectionView.reloadData()
+                self.collectionView?.reloadData()
                 
                 if error != nil {
                     self.showAlertInMainQueue( error.localizedDescription )

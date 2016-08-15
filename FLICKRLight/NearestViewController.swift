@@ -51,7 +51,7 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
                         "lon"       : String( locValue.longitude ),
                         "radius"    : "1" ];
         
-        let coordinates = "Latitude: \(String( format: "%.2f", locValue.latitude )) Latitude: \(String( format: "%.2f", locValue.longitude ))"
+        let coordinates = "Latitude: \(String( format: "%.2f", locValue.latitude )) Longitude: \(String( format: "%.2f", locValue.longitude ))"
         
         if self.navigationController?.tabBarController?.selectedIndex == 0 {
             SVProgressHUD.showWithStatus( "Fetching data for location [\(coordinates)]" )
@@ -64,7 +64,7 @@ class NearestViewController: CollectionViewController, CLLocationManagerDelegate
                         dispatch_get_main_queue()) {
                             
             self.navigationItem.title = coordinates
-            self.downloadInfo( self.collectionView! )
+            self.downloadInfo()
         }
     }
 }

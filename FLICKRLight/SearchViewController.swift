@@ -29,6 +29,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         collectionView.delegate = collectionController
         collectionView.dataSource = collectionController
         
+        collectionController.collectionView = collectionView
+        
         CollectionViewController.registerCell( collectionView )
     }
 
@@ -67,7 +69,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             Int64(1.5 * Double(NSEC_PER_SEC))),
                         dispatch_get_main_queue()) {
                             
-            self.collectionController.downloadInfo( self.collectionView )
+            self.collectionController.downloadInfo()
         }        
     }
     
