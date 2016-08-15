@@ -9,12 +9,6 @@
 import Foundation
 import FlickrKit
 
-struct SearchResult {
-    
-    var urlCollection   : NSURL?
-    var urlOrigin       : NSURL?
-}
-
 class SearchHandler {
     
     // MARK: - properties
@@ -28,7 +22,7 @@ class SearchHandler {
     private var loadingComplete     = false
     private var updatingInfo        = false
     
-    var imagesInfo      : [SearchResult] = []
+    var photosInfo      : [PhotoInfo] = []
     var searchOptions   : [String : String]
 
     // MARK - initializers
@@ -85,11 +79,11 @@ class SearchHandler {
                     let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
                     for photoDictionary in photoArray {
                         
-                        var searchResult = SearchResult()
+                        var searchResult = PhotoInfo()
                         searchResult.urlCollection  = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
                         searchResult.urlOrigin      = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeMedium800, fromPhotoDictionary: photoDictionary)
                         
-                        self.imagesInfo.append( searchResult )
+                        self.photosInfo.append( searchResult )
                     }
                     
                     completion( nil )
@@ -106,7 +100,7 @@ class SearchHandler {
     
     func needdownloadInfo( currentIndex : Int ) -> Bool {
         
-        return !loadingComplete && imagesInfo.count - currentIndex < ( photosPerPage / 2 )
+        return !loadingComplete && photosInfo.count - currentIndex < ( photosPerPage / 2 )
     }
 }
 

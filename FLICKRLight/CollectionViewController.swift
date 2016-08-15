@@ -92,7 +92,7 @@ class CollectionViewController: UICollectionViewController {
                     detailView.cache = imagesCache
                 }
                 
-                detailView.url = searchResult?.imagesInfo[indexPath.row].urlOrigin
+                detailView.url = searchResult?.photosInfo[indexPath.row].urlOrigin
             }
         }
     }
@@ -106,7 +106,7 @@ class CollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return searchResult?.imagesInfo.count ?? 0
+        return searchResult?.photosInfo.count ?? 0
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -119,7 +119,7 @@ class CollectionViewController: UICollectionViewController {
             cell.cache = imagesCache
         }
         
-        cell.url = searchResult?.imagesInfo[ indexPath.row ].urlCollection
+        cell.url = searchResult?.photosInfo[ indexPath.row ].urlCollection
 
         return cell
     }
