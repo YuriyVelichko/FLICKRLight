@@ -21,12 +21,6 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
     
     // MARK: - initializer
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        CollectionViewController.registerCell( collectionView )
-        
-    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         

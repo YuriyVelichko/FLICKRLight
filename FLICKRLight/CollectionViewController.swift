@@ -34,7 +34,8 @@ class CollectionViewController: UICollectionViewController {
 
         // Register cell classes
         
-        CollectionViewController.registerCell( collectionView! )
+        collectionView?.registerClass(  CollectionViewCell.self,
+                                        forCellWithReuseIdentifier: reuseIdentifier)
     }
 
     // MARK: - UICollectionViewController
@@ -153,12 +154,7 @@ class CollectionViewController: UICollectionViewController {
     }
     
     // MARK: - methods
-    
-    static func registerCell( collectionView : UICollectionView! ) {
-        collectionView.registerClass(  CollectionViewCell.self,
-                                       forCellWithReuseIdentifier: reuseIdentifier)
-    }
-    
+  
     func downloadInfo(){
         photoListLoader?.downloadInfo() { error in
             
