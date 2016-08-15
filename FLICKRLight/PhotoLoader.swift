@@ -11,6 +11,13 @@ import FlickrKit
 
 class PhotoLoader {
     
+    private struct State : OptionSetType {
+        let rawValue: Int
+        
+        static let Complete = State(rawValue: 0)
+        static let Updating = State(rawValue: 1 << 0)
+    }
+    
     // MARK: - properties
     
     private let flickrKey           = "1ad60cb73a4eba6311c161ecad292a0b"
@@ -19,11 +26,10 @@ class PhotoLoader {
     private var lastPage            = 0
     private let photosPerPage       = 100
 
-    private var loadingComplete     = false
-    private var updatingInfo        = false
+    private var state               : [State] = [];
     
-    var photosInfo      : [PhotoInfo] = []
-    var searchOptions   : [String : String]
+    var photosInfo                  : [PhotoInfo] = []
+    var searchOptions               : [String : String]
 
     // MARK - initializers
     
@@ -43,11 +49,11 @@ class PhotoLoader {
     
     func downloadInfo( completion: (NSError!) -> Void ) {
         
-        if loadingComplete || updatingInfo {
+        if state.contains( .Complete ) || state.contains( .Updating ) {
             return
         }
         
-        updatingInfo = true;
+        state.append( .Updating )
         
         searchOptions[ "page" ] = String( lastPage + 1 )
         debugPrint( searchOptions.description )
@@ -70,7 +76,9 @@ class PhotoLoader {
                         let pages = topPhotos["pages"] as? Int ?? 0
                         
                         if pageValue == pages {
-                            self.loadingComplete = true
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                self.state.append( .Complete )
+                            }
                         } else {
                             self.lastPage = pageValue
                         }
@@ -85,22 +93,21 @@ class PhotoLoader {
                         
                         self.photosInfo.append( searchResult )
                     }
-                    
-                    completion( nil )
-                    
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        self.updatingInfo = false
-                    }
                 }
-            } else {
-                completion( error )
             }
+            
+            dispatch_async( dispatch_get_main_queue() ) {
+                if let index = self.state.indexOf( .Updating ) {
+                    self.state.removeAtIndex( index )
+                }
+            }
+            
+            completion( nil )
         }
     }
     
-    func needdownloadInfo( currentIndex : Int ) -> Bool {
-        
-        return !loadingComplete && photosInfo.count - currentIndex < ( photosPerPage / 2 )
+    func needDownloadInfo( currentIndex : Int ) -> Bool {
+        return !state.contains( .Complete ) && photosInfo.count - currentIndex < ( photosPerPage / 2 )
     }
 }
 

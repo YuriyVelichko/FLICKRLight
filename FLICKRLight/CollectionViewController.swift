@@ -73,7 +73,7 @@ class CollectionViewController: UICollectionViewController {
             
             let indexPath = collectionView.indexPathForCell( lastVisibleCell )
             
-            if photoLoader?.needdownloadInfo( (indexPath?.row)! ) ?? false {
+            if photoLoader?.needDownloadInfo( (indexPath?.row)! ) ?? false {
                 downloadInfo( collectionView )
             }
         }
