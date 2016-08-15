@@ -13,10 +13,7 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
     
     // MARK: - properties
     
-    private var searchBarActive     : Bool = false
-    private var searchBarBoundsY    : CGFloat?
-    private var searchBar           : UISearchBar?
-    
+    private var searchBar           : UISearchBar?    
     private var lastSearchedText    = ""
     
     // MARK: - initializer
