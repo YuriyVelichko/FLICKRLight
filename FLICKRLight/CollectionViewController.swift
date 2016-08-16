@@ -145,7 +145,9 @@ class CollectionViewController: UICollectionViewController {
                     dispatch_async( dispatch_get_main_queue() ) {
                         if let readyImage = image  {
                             if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
-                                cell.setImage( readyImage, contentMode: .ScaleAspectFill )
+                                if let visibleCell = collectionView.cellForItemAtIndexPath( indexPath ) as? CollectionViewCell {
+                                    visibleCell.setImage( readyImage, contentMode: .ScaleAspectFill )
+                                }
                             }
                         }
                     }
