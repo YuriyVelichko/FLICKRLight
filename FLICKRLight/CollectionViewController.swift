@@ -101,9 +101,7 @@ class CollectionViewController: UICollectionViewController {
                 detailView.image = cachedImage
             } else {
                 downloadPhoto( url ) { image in
-                    dispatch_async( dispatch_get_main_queue() ) {
-                            detailView.image = image
-                    }
+                    detailView.image = image
                 }
             }
         }
@@ -139,11 +137,9 @@ class CollectionViewController: UICollectionViewController {
                 }
                 
                 downloadPhoto( url ) { image in
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
-                            if let visibleCell = collectionView.cellForItemAtIndexPath( indexPath ) as? CollectionViewCell {
-                                visibleCell.setImage( image, contentMode: .ScaleAspectFill )
-                            }
+                    if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
+                        if let visibleCell = collectionView.cellForItemAtIndexPath( indexPath ) as? CollectionViewCell {
+                            visibleCell.setImage( image, contentMode: .ScaleAspectFill )
                         }
                     }
                 }
@@ -205,9 +201,7 @@ class CollectionViewController: UICollectionViewController {
     
     private func downloadPhoto( url: NSURL, completion: (image : UIImage) -> Void )
     {
-        let URLRequest = NSURLRequest( URL: url )
-        
-        downloader?.downloadImage(URLRequest: URLRequest ) { response in
+        downloader?.downloadImage( URLRequest: NSURLRequest( URL: url ) ) { response in
             if let image = response.result.value {
                 completion( image: image )
             }
