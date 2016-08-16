@@ -11,7 +11,7 @@ import AlamofireImage
 
 class PhotoCache {
     
-    private let downloader  = ImageDownloader()
+    private let downloader  : ImageDownloader
     private let cache       : AutoPurgingImageCache
 
     
@@ -23,6 +23,13 @@ class PhotoCache {
             memoryCapacity: 100 * 1024 * 1024,
             preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
         )
+        
+        downloader = ImageDownloader(
+            configuration: ImageDownloader.defaultURLSessionConfiguration(),
+            downloadPrioritization: .FIFO,
+            maximumActiveDownloads: 4,
+            imageCache: cache
+        )
     }
     
     // MARK: - methods
@@ -32,21 +39,12 @@ class PhotoCache {
         let URLRequest = NSURLRequest( URL: url )
         
         if let cachedImage = imageForURL( url ) {
-            debugPrint( "FROM: CACHE")
             completion( image: cachedImage )
         } else {
             
-            debugPrint( "FROM: INET")
             downloader.downloadImage(URLRequest: URLRequest ) { response in
                 
                 if let image = response.result.value {
-                    
-                    self.cache.addImage(
-                        image,
-                        forRequest: URLRequest,
-                        withAdditionalIdentifier: "image"
-                    )
-                    
                     completion( image: image )
                 }
             }
