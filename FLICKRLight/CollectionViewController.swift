@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import AlamofireImage
 
 private let reuseIdentifier = "photoCell"
 private let cellSpacing     = CGFloat( 5 )
@@ -18,24 +19,35 @@ class CollectionViewController: UICollectionViewController {
 
     var photoListLoader : PhotoListLoader? {
         didSet {
-            photoCache.clearCache()
+            photoCache?.removeAllImages()
         }
     }
     
     private var visibleCells    : [NSIndexPath] = []
     
-    private let photoCache      = PhotoCache()
-
+    private var photoCache      : AutoPurgingImageCache?
+    private var downloader      : ImageDownloader?
     
     // MARK: - UIView
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Register cell classes
-        
         collectionView?.registerClass(  CollectionViewCell.self,
                                         forCellWithReuseIdentifier: reuseIdentifier)
+        
+        
+        photoCache = AutoPurgingImageCache(
+            memoryCapacity: 100 * 1024 * 1024,
+            preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
+        )
+        
+        downloader = ImageDownloader(
+            configuration: ImageDownloader.defaultURLSessionConfiguration(),
+            downloadPrioritization: .FIFO,
+            maximumActiveDownloads: 4,
+            imageCache: photoCache
+        )
     }
 
     // MARK: - UICollectionViewController
@@ -79,16 +91,22 @@ class CollectionViewController: UICollectionViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if  let detailView = segue.destinationViewController as? DetailViewController,
-            let collectionView = sender as? UICollectionView {
+        if  let detailView      = segue.destinationViewController as? DetailViewController,
+            let collectionView  = sender as? UICollectionView,
+            let indexPath       = collectionView.indexPathsForSelectedItems()?.first,
+            let url             = photoListLoader?.photosInfo[ indexPath.row ].urlOrigin,
+            let cache           = photoCache {
             
-            if let indexPath = collectionView.indexPathsForSelectedItems()?.first{
-                
-                if detailView.cache == nil {
-                    detailView.cache = photoCache
+            if let cachedImage = cache.imageForRequest( NSURLRequest( URL: url ) ) {
+                detailView.image = cachedImage
+            } else {
+                downloadPhoto( url ) { image in
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        if let readyImage = image  {
+                            detailView.image = readyImage
+                        }
+                    }
                 }
-                
-                detailView.url = photoListLoader?.photosInfo[indexPath.row].urlOrigin
             }
         }
     }
@@ -111,9 +129,10 @@ class CollectionViewController: UICollectionViewController {
     
         // Configure the cell
         
-        if let url = photoListLoader?.photosInfo[ indexPath.row ].urlCollection {
+        if  let url     = photoListLoader?.photosInfo[ indexPath.row ].urlCollection,
+            let cache   = photoCache {
             
-            if let cachedImage = photoCache.imageForURL( url ) {
+            if let cachedImage = cache.imageForRequest( NSURLRequest( URL: url ) ) {
                 cell.setImage( cachedImage, contentMode: .ScaleAspectFill )
             } else {
                 
@@ -121,12 +140,11 @@ class CollectionViewController: UICollectionViewController {
                     cell.setImage( placeholder, contentMode: .Center )
                 }
                 
-                photoCache.updateImage( url ) { image in
+                downloadPhoto( url ) { image in
                     dispatch_async( dispatch_get_main_queue() ) {
                         if let readyImage = image  {
                             if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
-                                
-                                    cell.setImage( readyImage, contentMode: .ScaleAspectFill )
+                                cell.setImage( readyImage, contentMode: .ScaleAspectFill )
                             }
                         }
                     }
@@ -183,6 +201,17 @@ class CollectionViewController: UICollectionViewController {
                 if error != nil {
                     self.showAlertInMainQueue( error.localizedDescription )
                 }
+            }
+        }
+    }
+    
+    private func downloadPhoto( url: NSURL, completion: (image : UIImage?) -> Void )
+    {
+        let URLRequest = NSURLRequest( URL: url )
+        
+        downloader?.downloadImage(URLRequest: URLRequest ) { response in
+            if let image = response.result.value {
+                completion( image: image )
             }
         }
     }

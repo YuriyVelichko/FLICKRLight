@@ -15,8 +15,12 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    weak var cache  : PhotoCache?
-    var url         : NSURL?
+    var image       : UIImage? {
+        didSet {
+            imageView?.image = image
+        }
+    }
+    
     
     // transform properties
     private var scale               = CGFloat(1)
@@ -26,23 +30,11 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
-        if let dataURL = self.url {
-            
-            SVProgressHUD.showWithStatus( "Fetching Image..." )
-            
-            cache?.updateImage( dataURL ) { image in
-                dispatch_async( dispatch_get_main_queue() ) {
-                    self.imageView.image = image
-                    SVProgressHUD.dismiss()
-                }
-            }
-        } else {
-            showAlertInMainQueue( "There datasource URL is empty" )
+        if let image = self.image {
+            imageView.image = image
         }
-        
+
         // Gesture recognizers
         
         imageView.userInteractionEnabled = true
