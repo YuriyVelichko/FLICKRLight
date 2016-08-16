@@ -102,9 +102,7 @@ class CollectionViewController: UICollectionViewController {
             } else {
                 downloadPhoto( url ) { image in
                     dispatch_async( dispatch_get_main_queue() ) {
-                        if let readyImage = image  {
-                            detailView.image = readyImage
-                        }
+                            detailView.image = image
                     }
                 }
             }
@@ -142,11 +140,9 @@ class CollectionViewController: UICollectionViewController {
                 
                 downloadPhoto( url ) { image in
                     dispatch_async( dispatch_get_main_queue() ) {
-                        if let readyImage = image  {
-                            if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
-                                if let visibleCell = collectionView.cellForItemAtIndexPath( indexPath ) as? CollectionViewCell {
-                                    visibleCell.setImage( readyImage, contentMode: .ScaleAspectFill )
-                                }
+                        if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
+                            if let visibleCell = collectionView.cellForItemAtIndexPath( indexPath ) as? CollectionViewCell {
+                                visibleCell.setImage( image, contentMode: .ScaleAspectFill )
                             }
                         }
                     }
@@ -207,7 +203,7 @@ class CollectionViewController: UICollectionViewController {
         }
     }
     
-    private func downloadPhoto( url: NSURL, completion: (image : UIImage?) -> Void )
+    private func downloadPhoto( url: NSURL, completion: (image : UIImage) -> Void )
     {
         let URLRequest = NSURLRequest( URL: url )
         
