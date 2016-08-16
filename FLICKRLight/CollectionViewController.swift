@@ -150,9 +150,7 @@ class CollectionViewController: UICollectionViewController {
                 cell.setImage( cachedImage, contentMode: .ScaleAspectFill )
             } else {
                 
-                if let placeholder = UIImage( named: "reload_placeholder_24" ) {
-                    cell.setImage( placeholder, contentMode: .Center )
-                }
+                cell.showWaitingIndicator()
                 
                 downloadPhoto( url ) { image in
                     if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
@@ -186,7 +184,7 @@ class CollectionViewController: UICollectionViewController {
                                sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         // Show 3 cells for iPhone and 5 cells for iPad in the portrait orientation
-        
+
         let screenSize      = UIScreen.mainScreen().bounds
         let portraitWidth   = min( screenSize.width, screenSize.height )
         

@@ -12,12 +12,21 @@ class CollectionViewCell: UICollectionViewCell {
     
     var imageView   : UIImageView!
     
+    var indicator   : UIActivityIndicatorView?
+    
     override init(frame: CGRect) {
         
         super.init(frame: frame)
         imageView = UIImageView(frame: self.contentView.bounds)
         
         contentView.addSubview(imageView)
+        
+        indicator = UIActivityIndicatorView( frame: contentView.frame )
+        indicator?.activityIndicatorViewStyle = .Gray
+        indicator?.hidesWhenStopped = true
+        contentView.addSubview( indicator! )
+        
+        indicator?.startAnimating()
         
         clipsToBounds = true
     }
@@ -28,8 +37,17 @@ class CollectionViewCell: UICollectionViewCell {
     
     // MARK: - internal methods
     
+    func showWaitingIndicator() {
+        self.imageView.image = nil
+        
+        indicator?.hidden = false;
+        indicator?.startAnimating()
+    }
+    
     func setImage( image: UIImage, contentMode: UIViewContentMode ){
         self.imageView.contentMode = contentMode
         self.imageView.image = image
+        
+        indicator?.stopAnimating()
     }
 }
