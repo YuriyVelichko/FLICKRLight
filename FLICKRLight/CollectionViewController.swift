@@ -37,7 +37,6 @@ class CollectionViewController: UICollectionViewController {
         collectionView?.registerClass(  CollectionViewCell.self,
                                         forCellWithReuseIdentifier: reuseIdentifier)
         
-        
         photoCache = AutoPurgingImageCache(
             memoryCapacity: 100 * 1024 * 1024,
             preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
