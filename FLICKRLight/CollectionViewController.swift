@@ -20,6 +20,7 @@ class CollectionViewController: UICollectionViewController {
     var photoListLoader : PhotoListLoader? {
         didSet {
             photoCache?.removeAllImages()
+            collectionView?.reloadData()
         }
     }
     
