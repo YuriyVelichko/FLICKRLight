@@ -97,6 +97,7 @@ class CollectionViewController: UICollectionViewController {
                 if  let url = photoListLoader?.photosInfo[ index.row ].urlCollection {
                     if let i = downloadQueue.indexOf({$0.receiptID == url.absoluteString}) {
                         downloader?.cancelRequestForRequestReceipt( downloadQueue[ i ] )
+                        downloadQueue.removeAtIndex( i )
                     }
                 }
             }
