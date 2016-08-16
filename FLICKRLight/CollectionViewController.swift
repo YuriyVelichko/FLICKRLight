@@ -24,7 +24,7 @@ class CollectionViewController: UICollectionViewController {
     
     private var visibleCells    : [NSIndexPath] = []
     
-    private let photoCache     = PhotoCache()
+    private let photoCache      = PhotoCache()
 
     
     // MARK: - UIView
@@ -111,12 +111,29 @@ class CollectionViewController: UICollectionViewController {
     
         // Configure the cell
         
-        if cell.cache == nil {
-            cell.cache = photoCache
+        if let url = photoListLoader?.photosInfo[ indexPath.row ].urlCollection {
+            
+            if let cachedImage = photoCache.imageForURL( url ) {
+                cell.setImage( cachedImage, contentMode: .ScaleAspectFill )
+            } else {
+                
+                if let placeholder = UIImage( named: "reload_placeholder_24" ) {
+                    cell.setImage( placeholder, contentMode: .Center )
+                }
+                
+                photoCache.updateImage( url ) { image in
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        if let readyImage = image  {
+                            if collectionView.indexPathsForVisibleItems().contains( indexPath ) {
+                                
+                                    cell.setImage( readyImage, contentMode: .ScaleAspectFill )
+                            }
+                        }
+                    }
+                }
+            }
         }
         
-        cell.url = photoListLoader?.photosInfo[ indexPath.row ].urlCollection
-
         return cell
     }
     

@@ -41,9 +41,7 @@ class PhotoCache {
         if let cachedImage = imageForURL( url ) {
             completion( image: cachedImage )
         } else {
-            
             downloader.downloadImage(URLRequest: URLRequest ) { response in
-                
                 if let image = response.result.value {
                     completion( image: image )
                 }
@@ -54,7 +52,7 @@ class PhotoCache {
     func imageForURL( url: NSURL ) -> UIImage? {
         
         let URLRequest = NSURLRequest( URL: url )
-        return cache.imageForRequest( URLRequest, withAdditionalIdentifier: "image" )
+        return cache.imageForRequest( URLRequest )
     }
     
     func clearCache() {
