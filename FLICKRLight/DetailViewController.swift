@@ -18,6 +18,7 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     var image       : UIImage? {
         didSet {
             imageView?.image = image
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -34,7 +35,7 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
         if let image = self.image {
             imageView.image = image
         }
-
+        
         // Gesture recognizers
         
         imageView.userInteractionEnabled = true
@@ -56,6 +57,12 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
         doubleTouchRecognizer.numberOfTapsRequired = 2
         imageView.addGestureRecognizer( doubleTouchRecognizer )
 
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if image == nil {
+            SVProgressHUD.showWithStatus( "Loading..." )
+        }
     }
 
     func gestureRecognizer( gestureRecognizer: UIGestureRecognizer,
