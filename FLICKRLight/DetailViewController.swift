@@ -66,11 +66,6 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func gestureRecognizer( gestureRecognizer: UIGestureRecognizer,
                             shouldRecognizeSimultaneouslyWithGestureRecognizer
                             otherGestureRecognizer: UIGestureRecognizer) -> Bool {

@@ -24,11 +24,6 @@ class SearchViewController: CollectionViewController, UISearchBarDelegate {
         addSearchBar()
         navigationItem.titleView = searchBar
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - UISearchBarDelegate
     
