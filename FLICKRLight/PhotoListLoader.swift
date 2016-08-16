@@ -24,7 +24,7 @@ class PhotoListLoader {
     private let flickrSecret        = "20b65be7d58394e9"
     
     private var lastPage            = 0
-    private let photosPerPage       = 100
+    private let photosPerPage       = 400
 
     private var state               : [State] = [];
     

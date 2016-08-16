@@ -29,6 +29,10 @@ class CollectionViewController: UICollectionViewController {
     private var photoCache      : AutoPurgingImageCache?
     private var downloader      : ImageDownloader?
     
+    private var previousVisibleIndexPaths : [NSIndexPath] = []
+    private var downloadQueue   : [RequestReceipt] = []
+    
+    
     // MARK: - UIView
     
     override func viewDidLoad() {
@@ -85,6 +89,20 @@ class CollectionViewController: UICollectionViewController {
                 downloadInfo()
             }
         }
+        
+        // Cancel download request for scrolled cells
+        let visiblePaths = collectionView?.indexPathsForVisibleItems() ?? []
+        for index in previousVisibleIndexPaths {
+            if !visiblePaths.contains( index ) {
+                if  let url = photoListLoader?.photosInfo[ index.row ].urlCollection {
+                    if let i = downloadQueue.indexOf({$0.receiptID == url.absoluteString}) {
+                        downloader?.cancelRequestForRequestReceipt( downloadQueue[ i ] )
+                    }
+                }
+            }
+        }
+        
+        previousVisibleIndexPaths = visiblePaths
     }
 
     // MARK: - Navigation
@@ -201,10 +219,15 @@ class CollectionViewController: UICollectionViewController {
     
     private func downloadPhoto( url: NSURL, completion: (image : UIImage) -> Void )
     {
-        downloader?.downloadImage( URLRequest: NSURLRequest( URL: url ) ) { response in
+        guard let receipt = ( downloader?.downloadImage( URLRequest: NSURLRequest( URL: url ), receiptID: url.absoluteString ) { response in
             if let image = response.result.value {
                 completion( image: image )
             }
+        } )
+        else {
+            return
         }
+        
+        downloadQueue.append( receipt )
     }
 }
