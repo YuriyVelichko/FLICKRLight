@@ -103,11 +103,10 @@ class CollectionViewController: UICollectionViewController {
         // Cancel download request for scrolled cells
         let visiblePaths = collectionView?.indexPathsForVisibleItems() ?? []
         for index in previousVisibleIndexPaths where !visiblePaths.contains( index ) {
-            if  let url = photoListLoader?.photosInfo[ index.row ].urlCollection {
-                if let i = downloadQueue.indexOf({$0.receiptID == url.absoluteString}) {
-                    downloader?.cancelRequestForRequestReceipt( downloadQueue[ i ] )
-                    downloadQueue.removeAtIndex( i )
-                }
+            if let  url = photoListLoader?.photosInfo[ index.row ].urlCollection,
+                    i   = downloadQueue.indexOf({$0.receiptID == url.absoluteString} ) {
+                downloader?.cancelRequestForRequestReceipt( downloadQueue[ i ] )
+                downloadQueue.removeAtIndex( i )
             }
         }
         
@@ -119,10 +118,10 @@ class CollectionViewController: UICollectionViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if  let detailView      = segue.destinationViewController as? DetailViewController,
-            let collectionView  = sender as? UICollectionView,
-            let indexPath       = collectionView.indexPathsForSelectedItems()?.first,
-            let url             = photoListLoader?.photosInfo[ indexPath.row ].urlOrigin,
-            let cache           = photoCache {
+                collectionView  = sender as? UICollectionView,
+                indexPath       = collectionView.indexPathsForSelectedItems()?.first,
+                url             = photoListLoader?.photosInfo[ indexPath.row ].urlOrigin,
+                cache           = photoCache {
             
             if let cachedImage = cache.imageForRequest( NSURLRequest( URL: url ) ) {
                 detailView.image = cachedImage
