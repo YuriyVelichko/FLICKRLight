@@ -19,18 +19,22 @@ class CollectionViewController: UICollectionViewController {
 
     var photoListLoader : PhotoListLoader? {
         didSet {
+            interruptDownloading()
             photoCache?.removeAllImages()
             collectionView?.reloadData()
+            
+            previousVisibleIndexPaths.removeAll()
+            visibleCells.removeAll()
         }
     }
     
-    private var visibleCells    : [NSIndexPath] = []
+    private var visibleCells                : [NSIndexPath] = []
     
-    private var photoCache      : AutoPurgingImageCache?
-    private var downloader      : ImageDownloader?
+    private var photoCache                  : AutoPurgingImageCache?
+    private var downloader                  : ImageDownloader?
     
-    private var previousVisibleIndexPaths : [NSIndexPath] = []
-    private var downloadQueue   : [RequestReceipt] = []
+    private var previousVisibleIndexPaths   : [NSIndexPath] = []
+    private var downloadQueue               : [RequestReceipt] = []
     
     
     // MARK: - UIView
@@ -98,13 +102,11 @@ class CollectionViewController: UICollectionViewController {
         
         // Cancel download request for scrolled cells
         let visiblePaths = collectionView?.indexPathsForVisibleItems() ?? []
-        for index in previousVisibleIndexPaths {
-            if !visiblePaths.contains( index ) {
-                if  let url = photoListLoader?.photosInfo[ index.row ].urlCollection {
-                    if let i = downloadQueue.indexOf({$0.receiptID == url.absoluteString}) {
-                        downloader?.cancelRequestForRequestReceipt( downloadQueue[ i ] )
-                        downloadQueue.removeAtIndex( i )
-                    }
+        for index in previousVisibleIndexPaths where !visiblePaths.contains( index ) {
+            if  let url = photoListLoader?.photosInfo[ index.row ].urlCollection {
+                if let i = downloadQueue.indexOf({$0.receiptID == url.absoluteString}) {
+                    downloader?.cancelRequestForRequestReceipt( downloadQueue[ i ] )
+                    downloadQueue.removeAtIndex( i )
                 }
             }
         }
@@ -236,16 +238,19 @@ class CollectionViewController: UICollectionViewController {
         downloadQueue.append( receipt )
     }
     
-    // MARK: - notification handlers
-    
-    @objc func applicationDidEnterBackground() {
-        
+    private func interruptDownloading() {
         for receipt in downloadQueue {
             downloader?.cancelRequestForRequestReceipt( receipt )
         }
         
         downloadQueue.removeAll()
+    }
+    
+    // MARK: - notification handlers
+    
+    @objc func applicationDidEnterBackground() {
         
+        interruptDownloading()
         photoCache?.removeAllImages()
     }
 }
