@@ -85,14 +85,14 @@ class PhotoListLoader {
                     }
                     
                     let photoArray = topPhotos["photo"] as! [[NSObject: AnyObject]]
-                    for photoDictionary in photoArray {
-                        
+                    
+                    self.photosInfo.appendContentsOf( photoArray.map( { (it) -> PhotoInfo in
                         var searchResult = PhotoInfo()
-                        searchResult.urlCollection  = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: photoDictionary)
-                        searchResult.urlOrigin      = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeMedium800, fromPhotoDictionary: photoDictionary)
+                        searchResult.urlCollection  = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeSmall240, fromPhotoDictionary: it)
+                        searchResult.urlOrigin      = FlickrKit.sharedFlickrKit().photoURLForSize(FKPhotoSizeMedium800, fromPhotoDictionary: it)
                         
-                        self.photosInfo.append( searchResult )
-                    }
+                        return searchResult
+                    } ) )
                 }
             }
             
