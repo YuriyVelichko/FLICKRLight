@@ -157,23 +157,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cc4-Ey-p06" firstAttribute="leading" secondItem="HUb-2G-WBk" secondAttribute="leading" id="1N3-AY-K2d"/>
                             <constraint firstItem="cc4-Ey-p06" firstAttribute="top" secondItem="gKn-0n-x9w" secondAttribute="bottom" id="49Y-vl-mOz"/>
-                            <constraint firstItem="flB-HV-CVE" firstAttribute="top" secondItem="cc4-Ey-p06" secondAttribute="bottom" id="74L-wu-ykB"/>
-                            <constraint firstAttribute="trailing" secondItem="cc4-Ey-p06" secondAttribute="trailing" id="J94-vC-Y67"/>
-                            <constraint firstItem="cc4-Ey-p06" firstAttribute="top" secondItem="gKn-0n-x9w" secondAttribute="bottom" id="Kim-6F-uQc"/>
                             <constraint firstItem="flB-HV-CVE" firstAttribute="top" secondItem="cc4-Ey-p06" secondAttribute="bottom" id="g6C-ZL-Egd"/>
                             <constraint firstItem="cc4-Ey-p06" firstAttribute="leading" secondItem="HUb-2G-WBk" secondAttribute="leading" id="kki-x2-Pqt"/>
                             <constraint firstAttribute="trailing" secondItem="cc4-Ey-p06" secondAttribute="trailing" id="m2B-Uz-Dyc"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="1N3-AY-K2d"/>
-                                <exclude reference="J94-vC-Y67"/>
-                                <exclude reference="Kim-6F-uQc"/>
-                                <exclude reference="74L-wu-ykB"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="cc4-Ey-p06" id="0eT-Sg-YbT"/>
