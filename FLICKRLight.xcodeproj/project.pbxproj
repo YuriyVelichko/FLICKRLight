@@ -141,6 +141,7 @@
 				TargetAttributes = {
 					DE3EF1051D5AFE300002DD76 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 9UTG55K8D6;
 					};
 				};
 			};
@@ -351,10 +352,13 @@
 			baseConfigurationReference = FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FLICKRLight/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "yv-test.FLICKRLight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -363,10 +367,13 @@
 			baseConfigurationReference = 3CAF14994A841C68D55429D3 /* Pods-FLICKRLight.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FLICKRLight/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "yv-test.FLICKRLight";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

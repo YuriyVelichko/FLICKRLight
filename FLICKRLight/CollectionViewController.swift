@@ -52,6 +52,12 @@ class CollectionViewController: UICollectionViewController {
             maximumActiveDownloads: 4,
             imageCache: photoCache
         )
+        
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver( self,
+                            selector: #selector( applicationDidEnterBackground ),
+                            name    : UIApplicationDidEnterBackgroundNotification,
+                            object  : nil)
     }
 
     // MARK: - UICollectionViewController
@@ -228,5 +234,18 @@ class CollectionViewController: UICollectionViewController {
         }
         
         downloadQueue.append( receipt )
+    }
+    
+    // MARK: - notification handlers
+    
+    @objc func applicationDidEnterBackground() {
+        
+        for receipt in downloadQueue {
+            downloader?.cancelRequestForRequestReceipt( receipt )
+        }
+        
+        downloadQueue.removeAll()
+        
+        photoCache?.removeAllImages()
     }
 }
