@@ -18,6 +18,7 @@
 		DE3EF1131D5AFE300002DD76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1121D5AFE300002DD76 /* Assets.xcassets */; };
 		DE3EF1161D5AFE300002DD76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE3EF1141D5AFE300002DD76 /* LaunchScreen.storyboard */; };
 		DE3F8D3F1D5C75DA00A344CA /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3F8D3E1D5C75DA00A344CA /* CollectionViewController.swift */; };
+		DE56F3B81D66E76B00EB25E8 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56F3B71D66E76B00EB25E8 /* App.swift */; };
 		DE5BC71D1D61AD270087203E /* PhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5BC71C1D61AD270087203E /* PhotoInfo.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		DE3EF1151D5AFE300002DD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE3EF1171D5AFE300002DD76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE3F8D3E1D5C75DA00A344CA /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		DE56F3B71D66E76B00EB25E8 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		DE5BC71C1D61AD270087203E /* PhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoInfo.swift; sourceTree = "<group>"; };
 		EF6C7E79802751F23BAE37AD /* Pods_FLICKRLight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FLICKRLight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3EC8681CB844D3EE831B6D /* Pods-FLICKRLight.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLICKRLight.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLICKRLight/Pods-FLICKRLight.debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				DE3EF1121D5AFE300002DD76 /* Assets.xcassets */,
 				DE3EF1141D5AFE300002DD76 /* LaunchScreen.storyboard */,
 				DE3EF10F1D5AFE300002DD76 /* Main.storyboard */,
+				DE56F3B71D66E76B00EB25E8 /* App.swift */,
 			);
 			path = FLICKRLight;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE56F3B81D66E76B00EB25E8 /* App.swift in Sources */,
 				DE5BC71D1D61AD270087203E /* PhotoInfo.swift in Sources */,
 				DE2DD1331D5B0B9600875DD5 /* SearchViewController.swift in Sources */,
 				DE3F8D3F1D5C75DA00A344CA /* CollectionViewController.swift in Sources */,

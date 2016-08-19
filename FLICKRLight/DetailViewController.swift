@@ -15,13 +15,19 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    var image       : UIImage? {
+    private var image : UIImage? {
         didSet {
-            imageView?.image = image
-            SVProgressHUD.dismiss()
+            if let imageView = self.imageView {
+                imageView.image = image
+                resetImageTransformation()
+                SVProgressHUD.dismiss()
+            }
         }
     }
     
+    lazy var showImage : (UIImage) -> Void = { [weak self] image in
+        self?.image = image
+    }
     
     // transform properties
     private var scale               = CGFloat(1)
@@ -62,6 +68,14 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(animated: Bool) {
         if image == nil {
             SVProgressHUD.showWithStatus( "Loading..." )
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if image != nil {
+            resetImageTransformation()
+            image = nil
+            imageView.image = nil
         }
     }
 
@@ -117,15 +131,18 @@ class DetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     func doubleTouchDetected( gesture : UIPanGestureRecognizer )
     {
-        UIView.animateWithDuration(0.3, animations: {
-            
-            self.scale               = CGFloat(1)
-            self.previousScale       = CGFloat(1)
-            self.rotation            = CGFloat(0)
-            self.previousRotation    = CGFloat(0)
-
-            gesture.view!.center = self.view.center
-            self.imageView.transform = CGAffineTransformIdentity
-        })
+        UIView.animateWithDuration( 0.3 ) {
+            self.resetImageTransformation()
+        }
+    }
+    
+    func resetImageTransformation() {
+        scale               = CGFloat(1)
+        previousScale       = CGFloat(1)
+        rotation            = CGFloat(0)
+        previousRotation    = CGFloat(0)
+        
+        imageView?.center = view.center
+        imageView?.transform = CGAffineTransformIdentity
     }
 }

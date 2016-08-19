@@ -36,6 +36,8 @@ class CollectionViewController: UICollectionViewController {
     private var previousVisibleIndexPaths   : [NSIndexPath] = []
     private var downloadQueue               : [RequestReceipt] = []
     
+    var didSelect : (((UIImage) -> Void ) -> Void) -> Void =  { _ in }
+    
     
     // MARK: - UIView
     
@@ -83,7 +85,21 @@ class CollectionViewController: UICollectionViewController {
     override func collectionView(   collectionView: UICollectionView,
                                     didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        performSegueWithIdentifier( "showDetail", sender:collectionView )
+        if  let url = photoListLoader?.photosInfo[ indexPath.row ].urlOrigin {
+            
+            let loader : ((UIImage) -> Void ) -> Void  = { [weak self] completion in
+             
+                if let cachedImage = self?.photoCache?.imageForRequest( NSURLRequest( URL: url ) ) {
+                    completion( cachedImage )
+                } else {
+                    self?.downloadPhoto( url ) { image in
+                        completion( image )
+                    }
+                }
+            }
+            
+            didSelect( loader )
+        }
     }
     
     // MARK: - UIScrollViewDelegate
@@ -111,26 +127,6 @@ class CollectionViewController: UICollectionViewController {
         }
         
         previousVisibleIndexPaths = visiblePaths
-    }
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if  let detailView      = segue.destinationViewController as? DetailViewController,
-                collectionView  = sender as? UICollectionView,
-                indexPath       = collectionView.indexPathsForSelectedItems()?.first,
-                url             = photoListLoader?.photosInfo[ indexPath.row ].urlOrigin,
-                cache           = photoCache {
-            
-            if let cachedImage = cache.imageForRequest( NSURLRequest( URL: url ) ) {
-                detailView.image = cachedImage
-            } else {
-                downloadPhoto( url ) { image in
-                    detailView.image = image
-                }
-            }
-        }
     }
 
     // MARK: UICollectionViewDataSource
